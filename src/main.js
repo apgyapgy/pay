@@ -4,6 +4,7 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import VueResource from 'vue-resource'
+import VueWechat from 'vue-wechat-title'
 
 import 'babel-polyfill'
 // import axios from 'axios'
@@ -17,6 +18,7 @@ import './assets/js/common.js'
 Vue.config.productionTip = false
 // Vue.prototype.$http = axios
 Vue.use(VueResource);
+Vue.use(VueWechat);
 
 Vue.http.options.emulateJSON = true;
 // Vue.http.headers.contentType ='application/x-www-form-urlencoded;charset=utf-8';

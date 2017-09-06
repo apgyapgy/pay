@@ -3,7 +3,7 @@
     <div class="index-header">
       <dl class="index-header-dl">
         <dt class="fl">
-          <img id="mchLogo" class="userPhoto fl" src="images/user.png">
+          <img id="mchLogo" class="userPhoto fl" src="../../static/images/user.png">
           <a id="mchNm" href="user.html" class="weui-cell_access"></a>
         </dt>
         <dd class="fr hide">
@@ -36,7 +36,7 @@
             <div class="weui-cells">
               <a id="orderList" class="weui-cell weui-cell_access">
                 <div class="weui-cell__hd">
-                  <img class="weui-cell_icon" src="images/search-icon.png" alt="交易查询"></div>
+                  <img class="weui-cell_icon" src="../../static/images/search-icon.png" alt="交易查询"></div>
                 <div class="weui-cell__bd weui-cell_primary">
                   <p>交易查询</p>
                 </div>
@@ -44,7 +44,7 @@
               </a>
               <a class="weui-cell weui-cell_access" href="payRecord.html">
                 <div class="weui-cell__hd">
-                  <img class="weui-cell_icon" src="images/record-icon.png" alt="资金到账记录"></div>
+                  <img class="weui-cell_icon" src="../../static/images/record-icon.png" alt="资金到账记录"></div>
                 <div class="weui-cell__bd weui-cell_primary">
                   <p>资金到账记录</p>
                 </div>
@@ -98,7 +98,7 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
+<style lang="less" scoped>
 h1, h2 {
   font-weight: normal;
 }
