@@ -11,6 +11,7 @@ import 'babel-polyfill'
 
 import './assets/css/weui.min.css'
 import './assets/css/jquery-weui.min.css'
+import './assets/css/common.css'
 import './assets/js/jquery-weui.js'
 import './assets/js/fastclick.js'
 import './assets/js/common.js'
