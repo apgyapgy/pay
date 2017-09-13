@@ -5,16 +5,14 @@ import App from './App'
 import router from './router'
 import VueResource from 'vue-resource'
 import VueWechat from 'vue-wechat-title'
-
 import 'babel-polyfill'
-// import axios from 'axios'
 
 import './assets/css/weui.min.css'
 import './assets/css/jquery-weui.min.css'
 import './assets/css/common.css'
-import './assets/js/jquery-weui.js'
 import './assets/js/fastclick.js'
-import './assets/js/common.js'
+import './assets/js/jquery-weui.js'
+import './assets/js/public.js'
 
 Vue.config.productionTip = false
 // Vue.prototype.$http = axios
@@ -26,13 +24,22 @@ Vue.http.options.emulateJSON = true;
 Vue.http.interceptors.push((request, next) => {
   $.showLoading();
   request.jsonp = 'callback';
-  next((response) => {
+  //let data = JSON.parse(request.data)
+  next((response) => {//在响应之后传给then之前对response进行修改和逻辑判断。对于token时候已过期的判断，就添加在此处，页面中任何一次http请求都会先调用此处方法
     setTimeout(function() {
       $.hideLoading();
     }, 500)
+    if(response.data.code=='40101'){
+      window.location.href='/#/userLogin'
+    }
     return response
   });
 });
+
+// //过滤器
+// Vue.filter('formatDate', function (value) {
+//   return value.replace('^(\d{4})(\d{2})(\d{2})$',"$1-$2-$3");
+// })
 
 /* eslint-disable no-new */
 new Vue({

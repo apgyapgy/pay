@@ -330,6 +330,9 @@ footer a {
 .white{
   color: #ffffff;
 }
+.gray{
+  color: #999999;
+}
 .black{
   color: #333333;
 }
@@ -375,6 +378,12 @@ footer a {
 .inline-block{
   display: inline-block;
 }
+.line60{
+  line-height: 60px;
+}
+.line50{
+  line-height: 50px;
+}
 .line40{
   line-height: 40px;
 }
@@ -398,6 +407,12 @@ footer a {
 }
 .border-bottom1{
   border-bottom: 1px solid #eee;
+}
+.border-right1{
+  border-right: 1px solid #eee;
+}
+.border-top1{
+  border-top: 1px solid #eee;
 }
 .hide{
   display: none;
