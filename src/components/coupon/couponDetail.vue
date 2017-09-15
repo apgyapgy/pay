@@ -53,7 +53,7 @@
 </template>
 
 <script type="text/ecmascript-6">
-  import {httpUrl} from '../assets/js/http_url';
+  import {httpUrl} from '../../assets/js/http_url';
   export default {
     name: 'couponDetail',
     data () {
@@ -77,6 +77,10 @@
           console.log('响应失败：'+response);
         });
       }
+    },
+    beforeRouteLeave (to, from, next) {
+      $.closeModal();
+      next();
     },
     mounted(){
       this.initCoupon();

@@ -1,7 +1,7 @@
 <template>
   <div id="userLogin" class="login-panel">
     <p class="photo">
-      <img src="../../static/images/fuiou.png">
+      <img src="../../../static/images/fuiou.png">
     </p>
     <div>
         <span class="block login-span">
@@ -21,8 +21,8 @@
 </template>
 
 <script type="text/ecmascript-6">
-  import {httpUrl} from '../assets/js/http_url';
-  import {publicJs} from '../assets/js/public';
+  import {httpUrl} from '../../assets/js/http_url';
+  import {publicJs} from '../../assets/js/public';
   export default {
     name: 'userLogin',
     data () {

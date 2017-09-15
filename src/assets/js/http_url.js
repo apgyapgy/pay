@@ -39,5 +39,9 @@ let httpUrl = {
   'paySearch':_host+'api/mch/pay_amt_st',//查询数据
   'phoneCode':_host+'api/sms/reset_pwd',//发送手机验证码
 	'resetPwd':_host+'user/reset_pwd',
+  'fansManage': _host + '/api/mch/cust_load',//粉丝管理
+  'fansQuery': _host + '/api/mch/cust_qry',//粉丝查询
+  'sendCoupon': _host + '/api/coupon/send',//批量发优惠券
+  'userCoupon': _host + '/api/coupon/usrCoupon',//粉丝优惠券信息
 };
 export {httpUrl}

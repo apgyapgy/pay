@@ -61,7 +61,7 @@
 		    </div>
 		</div>
 	</div>
-	
+
 </template>
 <script>
     $(function() {
@@ -126,7 +126,11 @@
 		},
 		created:function(){
 			this.getOrderData();
-		}
+		},
+    beforeRouteLeave (to, from, next) {
+      $.closeModal();
+      next();
+    },
 	}
 </script>
 

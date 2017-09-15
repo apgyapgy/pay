@@ -104,6 +104,11 @@
   				return strDate;
 		    }
 		},
+    beforeRouteLeave (to, from, next) {
+      $('.record-time').calendar("close");  //关闭弹窗
+      $.closeModal();
+      next();
+    },
 		mounted:function(){
 			//this.date_default.push(this.maxDate);
 			$(this.$refs.starttime).calendar({

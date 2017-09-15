@@ -26,8 +26,7 @@
   </div>
 </template>
 <script type="text/ecmascript-6">
-import {httpUrl} from '../assets/js/http_url';
-import {publicJs} from '../assets/js/public';
+import {httpUrl} from '../../assets/js/http_url';
 export default {
   name: 'index',
   data () {
@@ -42,20 +41,25 @@ export default {
     //下架优惠券
     cancelCoupon(item){
       var _this = this;
-      //console.log('item'+item);
+      //alert('item'+JSON.stringify(item));
       $.confirm("下架后该活动结束且不能再次上架，是否确认下架该活动？", function() {
         var params = {
+          couponNo:item.couponNo,
           couponNm: item.couponNm,       //优惠券名称
           startDt: item.couponLogo,        //活动开始时间
           expireDt: item.couponLogoTeam,       //活动结束时间
           couponAmt: item.couponAmt,      //优惠券金额
           couponNumTotal: item.couponNumTotal, //优惠券数量
           couponAmtMin: item.couponAmtMin,   //优惠券数量
+          //couponStDesc:item.couponStDesc,
+          couponSt:2,
         };
         _this.$http.jsonp(httpUrl.couponUpdate, {params: Object.assign(params, httpUrl.com_params)}).then((response) => {
           console.log('响应：'+response.data);
           if(response.data.code==200){
-
+            $.alert('下架成功',function () {
+              _this.initData();
+            });
           }else {
             $.alert(response.data.desc);
           }
@@ -86,6 +90,10 @@ export default {
         console.log('响应失败：'+response);
       });
     },
+  },
+  beforeRouteLeave (to, from, next) {
+    $.closeModal();
+    next();
   },
   mounted() {
     this.initData()

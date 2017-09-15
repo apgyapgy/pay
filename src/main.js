@@ -3,6 +3,7 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
+import store from './store'
 import VueResource from 'vue-resource'
 import VueWechat from 'vue-wechat-title'
 import 'babel-polyfill'
@@ -30,21 +31,17 @@ Vue.http.interceptors.push((request, next) => {
       $.hideLoading();
     }, 500)
     if(response.data.code=='40101'){
-      window.location.href='/#/userLogin'
+      window.location.href='/userLogin'
     }
     return response
   });
 });
 
-// //过滤器
-// Vue.filter('formatDate', function (value) {
-//   return value.replace('^(\d{4})(\d{2})(\d{2})$',"$1-$2-$3");
-// })
-
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
   router,
+  store,
   template: '<App/>',
   components: { App }
 })

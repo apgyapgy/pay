@@ -7,13 +7,13 @@
 		    <div class="block login-span">
 		        <router-link to="userInfo" class="weui-cell_access block pwd_link" style="width: 100%; float: left" name='list'>
 		            <label id="mchNm">{{mchNm}}</label>
-		            <div class="fr"><span class="weui-cell__ft"></span></div>
+		            <div class="fr"><span class="weui-cell__ft" style="margin-right: 15px"></span></div>
 		        </router-link>
 		    </div>
 		    <div class="block login-span">
 		        <router-link to="/userPwd" class="weui-cell_access block pwd_link" style="width: 100%; float: left" name='list'>
 		            <label class="fl">修改密码</label>
-		            <div class="fr"><span class="weui-cell__ft"></span></div>
+		            <div class="fr"><span class="weui-cell__ft" style="margin-right: 15px"></span></div>
 		        </router-link>
 		    </div>
 		    <p class="login-btn hide">

@@ -6,18 +6,20 @@
           <img class="userPhoto fl" :src="mchLogo">
         </div>
         <div class="weui-cell__bd">
-          <p>{{mchNm}}</p>
+          <router-link to="/user" class="weui-cell weui-cell_access">
+          {{data.mchNm}}
+          </router-link>
         </div>
         <div class="weui-cell__ft white">
           <a href="javascript:void(0);" class="weui-cell weui-cell_access">
-            <div class="weui-cell__bd">退出</div>
+            <div class="weui-cell__bd" style="margin-right: 10px">退出</div>
             <span class="weui-cell__ft"></span>
           </a>
         </div>
       </div>
       <div class="index-money">
         <span class="block">账面余额</span>
-        <b id="balanceYuan" class="block totalAmt">{{amtYuan}}</b>
+        <b id="balanceYuan" class="block totalAmt">{{data.balanceYuan}}</b>
       </div>
     </div>
     <div class="index-content">
@@ -27,32 +29,32 @@
             <div class="weui-cells">
               <div class="weui-form-preview__ft line30" style="padding: 20px;">
                 <div class="weui-form-preview__btn weui-form-preview__btn_default">
-                  <span id="dailyAmtYuan" class="block blue font25">{{todayAmt}}</span>
+                  <span id="dailyAmtYuan" class="block blue font25">{{data.dailyAmtYuan}}</span>
                   <span class="block font12">今日收款金额(元)</span>
                 </div>
                 <div class="weui-form-preview__btn weui-form-preview__btn_default">
-                  <span id="dailyNum" class="block blue font25">{{numAmt}}</span>
+                  <span id="dailyNum" class="block blue font25">{{data.dailyNum}}</span>
                   <span class="block font12">今日收款笔数</span>
                 </div>
               </div>
             </div>
             <div class="weui-cells">
-              <a id="orderList" class="weui-cell weui-cell_access">
+              <router-link to="/orderList" class="weui-cell weui-cell_access">
                 <div class="weui-cell__hd">
                   <img class="weui-cell_icon" src="../../static/images/search-icon.png" alt="交易查询"></div>
                 <div class="weui-cell__bd weui-cell_primary">
                   <p>交易查询</p>
                 </div>
                 <span class="weui-cell__ft"></span>
-              </a>
-              <a class="weui-cell weui-cell_access" href="payRecord.html">
+              </router-link>
+              <router-link to="/payRecord" class="weui-cell weui-cell_access">
                 <div class="weui-cell__hd">
                   <img class="weui-cell_icon" src="../../static/images/record-icon.png" alt="资金到账记录"></div>
                 <div class="weui-cell__bd weui-cell_primary">
                   <p>资金到账记录</p>
                 </div>
                 <span class="weui-cell__ft"></span>
-              </a>
+              </router-link>
               <router-link to="/coupon" class="weui-cell weui-cell_access">
                 <div class="weui-cell__hd">
                   <img class="weui-cell_icon" src="../../static/images/record-icon.png" alt="优惠券"></div>
@@ -61,7 +63,7 @@
                 </div>
                 <span class="weui-cell__ft"></span>
               </router-link>
-              <router-link to="/fansManage" class="weui-cell weui-cell_access">
+              <router-link :to="{ path: 'fansManage', query: { mchId:data.mchId}}" class="weui-cell weui-cell_access">
                 <div class="weui-cell__hd">
                   <img class="weui-cell_icon" src="../../static/images/record-icon.png" alt="粉丝管理"></div>
                 <div class="weui-cell__bd weui-cell_primary">
@@ -83,11 +85,8 @@ export default {
   name: 'index',
   data () {
     return {
-      mchNm: '',
+      data:{},
       mchLogo:'../../static/images/user.png',
-      amtYuan:'',
-      todayAmt: '',
-      numAmt:''
     }
   },
   methods: {
@@ -96,11 +95,8 @@ export default {
       this.$http.jsonp(httpUrl.home, {params: Object.assign(params, httpUrl.com_params)}).then((response) => {
         if(response.data.code==200){
           if(response.data.data){
-            this.mchNm = response.data.data.mchNm;
+            this.data = response.data.data;
             this.mchLogo = httpUrl.imgHost + response.data.data.mchLogo;
-            this.amtYuan = response.data.data.balanceYuan;
-            this.todayAmt = response.data.data.dailyAmtYuan;
-            this.numAmt = response.data.data.dailyNum;
           }
           //sessionStorage.setItem('loginId',response.data.data.loginId);
         }else {
@@ -110,6 +106,10 @@ export default {
         console.log('响应失败：'+response);
       });
     },
+  },
+  beforeRouteLeave (to, from, next) {
+    $.closeModal();
+    next();
   },
   mounted() {
     this.initData()

@@ -1,20 +1,22 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import UserLogin from '@/components/userLogin'
 import Index from '@/components/index'
-import Coupon from '@/components/coupon'
-import CouponDetail from '@/components/couponDetail'
-import CouponAdd from '@/components/couponAdd'
-import CouponUpdate from '@/components/couponUpdate'
-import FansManage  from '@/components/fansManage'
-import FansInfo from '@/components/fansInfo'
-import Coupons from '@/components/coupons/coupons'
-import CouponManage from '@/components/coupons/manage'
+/*优惠券管理*/
+import Coupon from '@/components/coupon/coupon'
+import CouponDetail from '@/components/coupon/couponDetail'
+import CouponAdd from '@/components/coupon/couponAdd'
+import CouponUpdate from '@/components/coupon/couponUpdate'
+/*粉丝管理*/
+import FansManage  from '@/components/fansManage/fansManage'
+import FansInfo from '@/components/fansManage/fansInfo'
+import FansCoupon from '@/components/fansManage/fansCoupon'
+/*交易查询*/
 import OrderList from '@/components/order/list'
 import OrderPayDetail from '@/components/order/paydetail'
-import PayRecord from '@/components/pay/recode'
-import PaySuccess from '@/components/pay/success'
-import QrCode from '@/components/qrcode/qrcode'
+/*资金到账*/
+import PayRecord from '@/components/payRecord/recode'
+/*用户*/
+import UserLogin from '@/components/user/userLogin'
 import User from '@/components/user/user'
 import UserInfo from '@/components/user/info'
 import UserPwd from '@/components/user/pwd'
@@ -22,27 +24,46 @@ import UserPwd from '@/components/user/pwd'
 Vue.use(Router)
 
 export default new Router({
-	//mode:'history',
-	routes: [
-	{
-      	path: '/',
-      	name: 'userLogin',
-      	meta: {
-        	title: '登录'
-      	},
-      	component: UserLogin,
-      	children: [{
-          	path: '/',
-          	component: Index
-        }]
-	},
-	{
-      	path: '/index',
-      	name: 'index',
-      	meta: {
-        	title: '首页'
-      	},
-      	component: Index,
+  routes: [
+    {
+      path: '/',
+      name: 'userLogin',
+      meta: {
+        title: '登录'
+      },
+      component: UserLogin,
+    },
+    {
+      path: '/index',
+      name: 'index',
+      meta: {
+        title: '首页'
+      },
+      component: Index,
+    },
+    {
+      path: '/orderList',
+      name: 'orderList',
+      meta: {
+        title: '交易查询'
+      },
+      component: OrderList,
+    },
+    {
+      path: '/orderPayDetail',
+      name: 'orderPayDetail',
+      meta: {
+        title: '交易详情'
+      },
+      component: OrderPayDetail,
+    },
+    {
+      path: '/payRecord',
+      name: 'payRecord',
+      meta: {
+        title: '资金划账记录'
+      },
+      component: PayRecord,
     },
     {
       	path: '/fansManage',
@@ -61,12 +82,12 @@ export default new Router({
       	component: FansInfo,
     },
     {
-    	path:'/coupons',
-    	name:'Coupons',
-    	meta:{
-    		title:'我的卡券包'
-    	},
-    	component:Coupons
+      path: '/fansCoupon',
+      name: 'fansCoupon',
+      meta: {
+        title: '选择优惠券'
+      },
+      component: FansCoupon,
     },
     {
       	path:'/coupon',
@@ -101,54 +122,6 @@ export default new Router({
       	component:CouponAdd
     },
     {
-    	path:'/couponManage',
-    	name:'couponManage',
-    	meta:{
-    		title:'优惠券管理'
-    	},
-    	component:CouponManage
-    },
-    {
-    	path:'/orderList',
-    	name:'orderList',
-    	meta:{
-    		title:'交易记录'
-    	},
-    	component:OrderList
-    },
-    {
-    	path:'/orderPayDetail',
-    	name:'orderPayDetail',
-    	meta:{
-    		title:'支付详情'
-    	},
-    	component:OrderPayDetail
-    },
-    {
-    	path:'/payRecord',
-    	name:'payRecord',
-    	meta:{
-    		title:'资金划账记录'
-    	},
-    	component:PayRecord
-    },
-	{
-    	path:'/paySuccess',
-    	name:'paySuccess',
-    	meta:{
-    		title:'支付结果'
-    	},
-    	component:PaySuccess
-    },
-    {
-    	path:'/qrCode',
-    	name:'qrCode',
-    	meta:{
-    		title:'二维码绑定'
-    	},
-    	component:QrCode
-    },
-    {
     	path:'/user',
     	name:'user',
     	meta:{
@@ -172,6 +145,5 @@ export default new Router({
     	},
     	component:UserPwd
     }
-    
   ]
 })

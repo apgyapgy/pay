@@ -27,7 +27,7 @@
 		            <span class="weui-form-preview__value" id="mchNm">{{detail.mchNm}}</span>
 		        </div>
 		        <div class="weui-form-preview__item">
-		            <label class="weui-form-preview__label">支付时间</label> 
+		            <label class="weui-form-preview__label">支付时间</label>
 		            <span class="weui-form-preview__value payTs">{{subString(detail.payTs,0,19)}}</span>
 		        </div>
 		        <div class="weui-form-preview__item">
@@ -105,7 +105,7 @@
 						$.toast('验证码已发送',1000);
 					}
 				},(response)=>{
-						
+
 				});
 			},
 			returnMoney:function(orderNo,code){
@@ -130,7 +130,7 @@
 						window.location.reload();
 					}
 				},(response)=>{
-					
+
 				});
 			},
 			showReturnMoneyModal:function(){//显示退款对话框
@@ -187,7 +187,11 @@
 			$("#sendBtn").click(function(){
 				_this.sendNumber();
 			});
-		}
+		},
+    beforeRouteLeave (to, from, next) {
+      $.closeModal();
+      next();
+    },
 	}
 </script>
 
