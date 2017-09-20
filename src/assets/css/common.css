@@ -345,6 +345,9 @@ footer a {
 .red{
   color: #f43530;
 }
+.color6{
+  color: #666;
+}
 .wf{
   width: 100%;
   float: left;
@@ -425,4 +428,7 @@ footer a {
 }
 .txtCenter{
   text-align: center;
+}
+.empty{
+  height: 80px;
 }

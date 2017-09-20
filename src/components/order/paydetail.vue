@@ -6,10 +6,10 @@
 		            <img id="payImg" class="weui-cell_icon payIcon" :src="changeIcon" alt="交易查询">
 		        </div>
 		        <div class="weui-cell__bd weui-cell_primary">
-		            <p id="desc"></p>
-		            <p class="weui-media-box__desc font14 payTs"></p>
+		            <p id="desc">{{detail.payModeShortDesc+detail.orderStDesc}}</p>
+		            <p class="weui-media-box__desc font14 payTs">{{subString(detail.payTs,0,19)}}</p>
 		        </div>
-		        <div class="weui-cell__hd orderAmtYuan"></div>
+		        <div class="weui-cell__hd orderAmtYuan">￥{{detail.orderAmtYuan}}</div>
 		    </div>
 		</div>
 		<div class="weui-form-preview">
@@ -18,35 +18,61 @@
 		        <!--<em class="weui-form-preview__value">¥2400.00</em>-->
 		    <!--</div>-->
 		    <div class="weui-form-preview__bd">
-		        <div class="weui-form-preview__item">
+		        <div class="weui-form-preview__item" v-show="detail.showCoupon">
 		            <label class="weui-form-preview__label">应收金额</label>
-		            <span class="weui-form-preview__value orderAmtYuan">{{detail.orderAmtYuan}}</span>
+		            <span class="weui-form-preview__value orderAmtYuan">{{detail.orderAmtOrgYuan}}</span>
 		        </div>
+            <div class="weui-form-preview__item" v-show="detail.showCoupon">
+              <label class="weui-form-preview__label">优惠金额</label>
+              <span class="weui-form-preview__value orderAmtYuan">{{detail.couponAmtYuan}}</span>
+            </div>
 		        <div class="weui-form-preview__item">
 		            <label class="weui-form-preview__label">商户名称</label>
-		            <span class="weui-form-preview__value" id="mchNm">{{detail.mchNm}}</span>
+		            <span class="weui-form-preview__value">{{detail.mchNm}}</span>
 		        </div>
 		        <div class="weui-form-preview__item">
 		            <label class="weui-form-preview__label">支付时间</label>
-		            <span class="weui-form-preview__value payTs">{{subString(detail.payTs,0,19)}}</span>
+		            <span class="weui-form-preview__value">{{subString(detail.payTs,0,19)}}</span>
 		        </div>
 		        <div class="weui-form-preview__item">
 		            <label class="weui-form-preview__label">支付方式</label>
-		            <span class="weui-form-preview__value" id="payType">{{detail.payModeShortDesc}}</span>
+		            <span class="weui-form-preview__value">{{detail.payModeShortDesc}}</span>
 		        </div>
 		        <div class="weui-form-preview__item">
 		            <label class="weui-form-preview__label">商户号</label>
-		            <span class="weui-form-preview__value" id="mchId">{{detail.mchId}}</span>
+		            <span class="weui-form-preview__value">{{detail.mchId}}</span>
 		        </div>
 		        <div class="weui-form-preview__item">
 		            <label class="weui-form-preview__label">交易单号</label>
-		            <span class="weui-form-preview__value" id="orderNo">{{detail.orderNo}}</span>
+		            <span class="weui-form-preview__value">{{detail.orderNo}}</span>
 		        </div>
 		    </div>
 		</div>
 		<div v-show="detail.canRefund" class="weui-form-preview__bd">
 		    <a @click="showReturnMoneyModal" id="returnMoney" href="javascript:;" class="weui-btn weui-btn_primary">申请退款</a>
 		    <p class="line36 txtCenter">客服电话：95138</p>
+		</div>
+
+		<div class="weui-mask" :class="{'weui-mask--visible':showDialogFlag}"></div>
+		<div class="weui-dialog" :class="{'weui-dialog--visible':showDialogFlag}">
+			<div class="weui-dialog__hd">
+				<strong class="weui-dialog__title">短信验证</strong>
+			</div>
+			<div class="weui-dialog__bd">
+				<div>
+					<span class="block" style="line-height: 40px; text-align: left">
+						短信将发送至：{{mobile}}
+					</span>
+					<span class="block" style="border: 1px solid #d6d6d6; height: 40px; margin-bottom: 10px">
+						<input v-model="yzm" id="yanzm" placeholder="请输入验证码" class="fl" type="tel" style="width: 50%; padding-left: 5px; height: 36px; line-height: 36px;">
+						<a ref="sendBtn" id="sendBtn" @click="sendNumber" href="javascript:;" class="weui-btn weui-btn_mini weui-btn_primary fr" :class="{disabled:cutdownTime!=0}" style="margin: 4px; padding: 0 5px;">{{cutdownText}}</a>
+					</span>
+				</div>
+			</div>
+			<div class="weui-dialog__ft">
+				<a @click="cancelRefund" href="javascript:;" class="weui-dialog__btn default">取消</a>
+				<a @click="sureRefund" href="javascript:;" class="weui-dialog__btn ">确定</a>
+			</div>
 		</div>
 	</div>
 </template>
@@ -62,7 +88,12 @@
 			return{
 				orderNo:'',
 				payMode:'',
-				detail:{}
+				detail:{},
+				mobile:'',//loginId
+				cutdownTime:0,
+				timer:null,
+				showDialogFlag:false,
+				yzm:''
 			}
 		},
 		methods:{
@@ -94,84 +125,124 @@
 				}
 			},
 			sendNumber:function(){//发送验证码
-				console.log("sendNumber")
+				if(this.cutdownTime != 0){
+					return;
+				}
+				var _this = this;
+				console.log("sendNumber");
 				this.$http.jsonp(httpUrl.smsRefund,{})
 				.then((response)=>{
 					var _res = response.body;
 					if(_res.code != 200){
-						$.closeModal();
-						$.alert(_res.desc);
+						$.toptip(_res.desc, 'error');
+						/*if(res.desc == '该验证码已发送，请1分钟后再试'){
+							$.toptip(_res.desc, 'success');
+							//$.alert(_res.desc);
+						}else{
+							$.closeModal();
+							$.alert(_res.desc);
+						}*/
 					}else{
-						$.toast('验证码已发送',1000);
+						//$.toast('验证码已发送',1000);
+						_this.cutdownTime = 61;
+						_this.cutdown();
 					}
 				},(response)=>{
 
 				});
 			},
-			returnMoney:function(orderNo,code){
+			returnMoney:function(){
+				var _this = this;
 				var _params = {
 					orderNo:this.orderNo,
-					code:this.code
+					code:this.yzm
 				};
 				this.$http.jsonp(httpUrl.orderRefund,
 					{params:_params}
 				).then((response)=>{
 					var _res = response.body;
 					if(_res.code != 200){
-						$.closeModal();
 						if(_res.desc){
-							$.alert(_res.desc,function(){
-								window.location.reload();
-							});
+							$.toptip(_res.desc, 'error');
 						}else{
-							$.alert('系统异常，请稍后重试');
+							$.toptip('系统异常，请稍后重试', 'warning');
 						}
 					}else{
-						window.location.reload();
+            _this.showDialogFlag = false;
+            $.alert("退款申请已提交，5个工作日到账",function(){
+              _this.initData();
+              //window.location.reload();
+            });
 					}
 				},(response)=>{
 
 				});
 			},
 			showReturnMoneyModal:function(){//显示退款对话框
-				var mobile = sessionStorage.getItem('loginId');
+				this.showDialogFlag = true;
+			},
+			getUserInfo:function(){
+				var params = {};
+				this.$http.jsonp(httpUrl.home, {
+					params: Object.assign(params, httpUrl.com_params)
+				}).then((response) => {
+			        if(response.data.code==200){
+			          if(response.data.data){
+			              window.sessionStorage.loginId = response.data.data.loginId;
+			              this.mobile = response.data.data.loginId;
+			          }
+			        }else {
+			          $.alert(response.data.desc);
+			        }
+		      	}, (response) => {
+		        	console.log('响应失败：'+response);
+		      	});
+			},
+			cutdown:function(){
+				//console.log("down:",this.cutdownTime);
+				var _timer = null;
 				var _this = this;
-				$.modal({
-		            title: '短信验证',
-		            text: '<div><span class="block" style="line-height: 40px; text-align: left">短信将发送至：'+mobile+'</span><span class="block" style="border: 1px solid #d6d6d6; height: 40px; margin-bottom: 10px">' +
-		            '<input id="yanzm" placeholder="请输入验证码" class="fl" type="tel" style="width: 50%; padding-left: 5px; height: 36px; line-height: 36px;">' +
-		            '<a id="sendBtn" @click="sendNumber" href="javascript:;" class="weui-btn weui-btn_mini weui-btn_primary fr" style="margin: 4px; padding: 0 5px;">获取验证码</a></div>',
-		            autoClose: false,
-		            buttons: [
-		                { text: "取消", className: "default",
-		                    onClick: function(){
-		                        $.closeModal();
-		                    }
-		               },{ text: "确定", onClick: function(){
-		                        //点击确认
-		                        console.log('验证码：'+$('#yanzm').val());
-		                        var num = $('#yanzm').val();
-		                        if(num){
-		                            $.closeModal();
-		                            $.alert("退款申请已提交，5个工作日到账", function() {
-		                                //退款
-		                                _this.returnMoney(orderNo,num);
-		                            });
-		                        }else{
-		                            $.toast("请选输入验证码", "text");
-		                        }
-		                    }
-		                }
-		            ]
-		        });
+				function down(){
+					window.clearTimeout(_timer);
+					_this.cutdownTime--;
+					//console.log(_this.cutdownTime);
+					if(_this.cutdownTime >0){
+						_timer = window.setTimeout(function(){
+							down();
+						},1000);
+					}else{
+						this.cutdownTime = 0;
+					}
+				}
+				down();
+			},
+			cancelRefund:function(){
+				this.showDialogFlag = false;
+				this.cutdownTime = 0;
+				this.yzm = '';
+			},
+			sureRefund:function(){
+				if(this.yzm){
+					this.returnMoney();
+
+				}else{
+					$.toast("请输入验证码", "text");
+				}
 			}
 		},
 		computed:{
 			changeIcon:function(){
 				if(this.payMode == 6){
-					return '/static/images/aliPay-icon.png';
+					return '../images/aliPay-icon.png';
 				}else{
-					return '/static/images/wxPay-icon.png';
+					return '../images/wxPay-icon.png';
+				}
+			},
+			cutdownText:function(){
+				if(this.cutdownTime == 0){
+					return '发送验证码';
+				}else{
+					return this.cutdownTime + 's';
 				}
 			}
 		},
@@ -187,13 +258,26 @@
 			$("#sendBtn").click(function(){
 				_this.sendNumber();
 			});
+			//获取手机号以备获取验证码之用
+			var mobile = sessionStorage.getItem('loginId');
+			if(!mobile){
+				this.getUserInfo();
+			}else{
+				this.mobile = mobile;
+			}
 		},
-    beforeRouteLeave (to, from, next) {
-      $.closeModal();
-      next();
-    },
+	    beforeRouteLeave (to, from, next) {
+	      $.closeModal();
+	      next();
+	    },
 	}
 </script>
 
 <style scoped>
+	#sendBtn{
+		min-width:80px;
+	}
+	#sendBtn.disabled{
+		background:#999;
+	}
 </style>

@@ -15,7 +15,7 @@
       </div>
       <div class="weui-form-preview__item">
         <label class="weui-form-preview__label">优惠券数量</label>
-        <span class="weui-form-preview__value">{{item.couponNum}}张</span>
+        <span class="weui-form-preview__value">{{item.couponNumTotal}}张</span>
       </div>
       <div class="weui-form-preview__item">
         <label class="weui-form-preview__label">使用规则</label>
@@ -26,8 +26,8 @@
         <span class="weui-form-preview__value">{{item.couponLogo}}至{{item.couponLogoTeam}}</span>
       </div>
     </div>
-    <div class="empetyDiv"></div>
-    <div class="weui-form-preview__bd">
+    <div class="empetyDiv" v-show="item.sendNum||item.sendAmt||item.usedNum||item.usedAmt||item.couponSt==1"></div>
+    <div class="weui-form-preview__bd" v-show="item.sendNum||item.sendAmt||item.usedNum||item.usedAmt||item.couponSt==1">
       <div class="weui-form-preview__item" v-show="item.sendNum">
         <label class="weui-form-preview__label">已发放数量</label>
         <span class="weui-form-preview__value">{{item.sendNum}}张</span>
@@ -44,7 +44,7 @@
         <label class="weui-form-preview__label">已使用金额</label>
         <span class="weui-form-preview__value">{{item.usedAmt}}元</span>
       </div>
-      <div class="weui-form-preview__item">
+      <div class="weui-form-preview__item" v-show="item.couponSt==1">
         <label class="weui-form-preview__label">距活动结束还有</label>
         <span class="weui-form-preview__value">{{item.leftDays}}天</span>
       </div>
@@ -54,6 +54,7 @@
 
 <script type="text/ecmascript-6">
   import {httpUrl} from '../../assets/js/http_url';
+  import {publicJs} from '../../assets/js/public.js';
   export default {
     name: 'couponDetail',
     data () {
@@ -70,6 +71,10 @@
           console.log('响应：'+response.data);
           if(response.data.code==200){
             this.item = response.data.data;
+            this.item.couponAmt = publicJs.accDiv(this.item.couponAmt,100);
+            this.item.couponAmtMin = publicJs.accDiv(this.item.couponAmtMin,100);
+            this.item.usedAmt = publicJs.accDiv(this.item.usedAmt,100);
+            this.item.sendAmt = publicJs.accDiv(this.item.sendAmt,100);
           }else {
             $.alert(response.data.desc);
           }

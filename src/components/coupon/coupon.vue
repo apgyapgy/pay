@@ -1,5 +1,6 @@
 <template>
   <div id="coupon">
+    <!--<router-link to="/index" class="addCouponBtn weui-btn weui-btn_default">返回首页</router-link>-->
     <router-link to="/couponAdd" class="addCouponBtn weui-btn weui-btn_primary">+ 新增优惠券</router-link>
     <div class="couponList font14 txtCenter bgfff">
       <div class="weui-flex title">
@@ -8,7 +9,7 @@
         <div class="weui-flex__item">状态</div>
         <div class="weui-flex__item">操作</div>
       </div>
-      <div v-if="isHaveData" class="weui-flex list" v-for="item in items">
+      <div v-show="isHaveData" class="weui-flex list" v-for="item in items">
         <router-link :to="{ path: 'couponDetail', query: { couponNo:item.couponNo }}" class="weui-flex__item green">{{item.couponNm}}</router-link>
         <div class="weui-flex__item">{{item.couponLogo}}至{{item.couponLogoTeam}}</div>
         <div class="weui-flex__item">{{item.couponStDesc}}</div>
@@ -19,14 +20,26 @@
           </div>
         </div>
       </div>
-      <div v-else class="weui-loadmore weui-loadmore_line">
+      <div v-show="!isHaveData" class="weui-loadmore weui-loadmore_line">
         <span class="weui-loadmore__tips">暂无数据</span>
       </div>
     </div>
+    <div class="empty"></div>
+    <!--<div class="weui-form-preview__ft wf">-->
+      <!--<div class="weui-flex wf txtCenter">-->
+        <!--<div class="weui-flex__item">-->
+            <!--<router-link to="/index" class="addCouponBtn weui-btn weui-btn_default">&lt; 返回首页</router-link>-->
+        <!--</div>-->
+        <!--<div class="weui-flex__item">-->
+          <!--<router-link to="/couponAdd" class="addCouponBtn weui-btn weui-btn_primary">+ 新增优惠券</router-link>-->
+        <!--</div>-->
+      <!--</div>-->
+    <!--</div>-->
+
   </div>
 </template>
 <script type="text/ecmascript-6">
-import {httpUrl} from '../../assets/js/http_url';
+import {httpUrl} from '../../assets/js/http_url'
 export default {
   name: 'index',
   data () {
@@ -76,10 +89,11 @@ export default {
 //        pageEnd:this.pageEnd
       };
       this.$http.jsonp(httpUrl.coupon, {params: Object.assign(params, httpUrl.com_params)}).then((response) => {
-        console.log('响应：'+response.data);
+        console.log('优惠券响应：'+response.data);
         if(response.data.code==200){
-            if(response.data.data.datas){
+            if(response.data.data.datas.length>0){
               this.items = response.data.data.datas;
+              this.isHaveData = true;
             }else{
               this.isHaveData = false;
             }
@@ -91,12 +105,27 @@ export default {
       });
     },
   },
-  beforeRouteLeave (to, from, next) {
-    $.closeModal();
+  beforeRouteEnter(to,from,next){
+    window.sessionStorage.backFlag = 'false';
+    if(from.fullPath == '/couponAdd' && to.fullPath=='/coupon' || from.fullPath.indexOf('/couponUpdate')>=0 && to.fullPath=='/coupon'){
+      window.sessionStorage.backFlag = 'true';
+    }
     next();
   },
-  mounted() {
-    this.initData()
+  beforeRouteLeave (to, from, next) {
+    $.closeModal();
+    if(from.fullPath == '/coupon' && to.fullPath=='/couponAdd' || from.fullPath == '/coupon' && to.fullPath.indexOf('/couponUpdate')>=0){
+      if(window.sessionStorage.backFlag == 'true'){
+        this.$router.push({ path: '/index' });
+      }else{
+        next();
+      }
+    }else{
+      next();
+    }
+  },
+  mounted:function () {
+    this.initData();
   }
 }
 </script>
@@ -122,4 +151,17 @@ export default {
     padding: 0 5px;
     text-decoration:underline;
   }
+  /*.weui-form-preview__ft{*/
+    /*position: fixed;*/
+    /*bottom: 0;*/
+    /*background: #FFFFFF;*/
+    /*padding: 15px;*/
+  /*}*/
+  /*.weui-form-preview__ft a{*/
+    /*font-size: 16px;*/
+    /*width: 80%;*/
+    /*margin-top: 10px;*/
+    /*margin-bottom: 10px;*/
+    /*!*margin: 10px 0;*!*/
+  /*}*/
 </style>

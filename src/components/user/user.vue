@@ -2,16 +2,16 @@
 	<div class="user">
 		<div class="login-panel">
 		    <p class="photo">
-		        <img id="mchLogo" :src="mchLogo" style="width: 100px; height: 100px; border-radius: 100%">
+		        <img class="mchLogo" id="mchLogo" :src="mchLogo">
 		    </p>
-		    <div class="block login-span">
-		        <router-link to="userInfo" class="weui-cell_access block pwd_link" style="width: 100%; float: left" name='list'>
+		    <div class="login-span fl hide">
+		        <router-link to="userInfo" class="weui-cell_access link_a" name='list'>
 		            <label id="mchNm">{{mchNm}}</label>
-		            <div class="fr"><span class="weui-cell__ft" style="margin-right: 15px"></span></div>
+		            <span class="weui-cell__ft"></span>
 		        </router-link>
 		    </div>
-		    <div class="block login-span">
-		        <router-link to="/userPwd" class="weui-cell_access block pwd_link" style="width: 100%; float: left" name='list'>
+		    <div class="login-span fl">
+		        <router-link to="/userPwd" class="weui-cell_access link_a" name='list'>
 		            <label class="fl">修改密码</label>
 		            <div class="fr"><span class="weui-cell__ft" style="margin-right: 15px"></span></div>
 		        </router-link>
@@ -32,7 +32,7 @@
 	export default{
 		data(){
 			return {
-				mchLogo:'/static/images/user.png',
+				mchLogo:'../../../static/',
 				mchNm:''
 			}
 		},
@@ -46,7 +46,9 @@
 			        if(response.data.code==200){
 			          	if(response.data.data){
 				            this.mchNm = response.data.data.mchNm;
-				            this.mchLogo = httpUrl.imgHost + response.data.data.mchLogo;
+				            if(response.data.data.mchLogo){
+                      this.mchLogo = httpUrl.imgHost + response.data.data.mchLogo;
+                    }
 				            console.log(this.mchNm)
 			          	}
 			        }else {
@@ -63,5 +65,17 @@
 	}
 </script>
 
-<style>
+<style scoped>
+  .mchLogo{
+    width: 100px;
+    height: 100px;
+    border-radius: 100%;
+    border: 1px solid #eeeeee;
+  }
+  .link_a{
+    position: absolute;
+    right: 15px;
+    width: 100%;
+    padding-left: 30px;
+  }
 </style>

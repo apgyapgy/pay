@@ -14,7 +14,7 @@
         </span>
       <p class="login-btn">
         <a id="login" @click="login" class="weui-btn weui-btn_primary">登录</a>
-        <a id="forgetPwd" class="forgetPwd font14">忘记密码</a>
+        <router-link to="/userPwd" class="forgetPwd font14">忘记密码</router-link>
       </p>
     </div>
   </div>
@@ -27,8 +27,8 @@
     name: 'userLogin',
     data () {
       return {
-        loginId:'15866666668',
-        loginPwd:'888888',
+        loginId:'',
+        loginPwd:'',
         src:0
       }
     },

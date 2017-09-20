@@ -47,7 +47,7 @@
 		                            <p>{{item.payModeShortDesc+item.orderStDesc}}</p>
 		                            <p class="weui-media-box__desc font14">{{item.crtTs.substring(0,19)}}</p>
 		                        </div>
-		                        <div class="weui-cell__hd">{{item.orderAmtYuan}}</div>
+		                        <div class="weui-cell__hd marginRt15">{{item.orderAmtYuan}}</div>
 		                        <span class="weui-cell__ft"></span>
 		                    </router-link>
 		                </div>
@@ -118,9 +118,9 @@
 			},
 			chooseImg:function(mode){//根据返回的payMode显示支付宝或微信图片
 				if(mode == 0){//微信支付
-					return '/static/images/wxPay-icon.png';
+					return '../images/wxPay-icon.png';
 				}else{
-					return '/static/images/aliPay-icon.png';
+					return '../images/aliPay-icon.png';
 				}
 			}
 		},
@@ -135,4 +135,10 @@
 </script>
 
 <style scoped>
+  .marginRt15{
+    margin-right: 15px;
+  }
+  .rt15{
+    right: 15px;
+  }
 </style>

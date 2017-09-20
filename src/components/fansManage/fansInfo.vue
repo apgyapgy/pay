@@ -30,12 +30,13 @@
         <span class="weui-loadmore__tips">暂无数据</span>
       </div>
     </div>
+    <div class="empty"></div>
     <div class="weui-form-preview__ft wf">
       <div class="weui-flex wf txtCenter">
         <div class="weui-flex__item">
-          <router-link @click.native="newFansItem()" :to="{ path: 'fansCoupon',query:{ isfrom:'fansInfo' }}" class="weui-btn weui-btn_primary">
+          <div @click="newFansItem" class="weui-btn weui-btn_primary">
             发送优惠券
-          </router-link>
+          </div>
         </div>
         <!--<div class="weui-flex__item"><a href="javascript:;" class="weui-btn weui-btn_primary">批量发送消息</a></div>-->
       </div>
@@ -56,7 +57,12 @@
     },
     methods: {
       newFansItem:function () {
-        this.$store.commit('newFansItem', this.unionId)
+        this.$store.commit('NEWFANSITEM', this.unionId);
+        //console.log('粉丝个人：'+this.$store.state.fansItems);
+        this.$router.push({ path: '/fansCoupon',query:{ isfrom:'fansInfo'}});
+      },
+      returnIndex:function () {
+        this.$router.push({ path: '/index' });
       },
       initData() {
         let params={
@@ -65,7 +71,7 @@
         this.$http.jsonp(httpUrl.userCoupon, {params: Object.assign(params, httpUrl.com_params)}).then((response) => {
           console.log('响应：'+response.data);
           if(response.data.code==200){
-            if(response.data.data.datas){
+            if(response.data.data.datas.length>0){
               this.isHaveData = true;
               this.items = response.data.data.datas;
             }else{
@@ -80,27 +86,38 @@
         });
       }
     },
+    beforeRouteEnter(to,from,next){
+      window.sessionStorage.backFlag = 'false';
+      if(from.fullPath.indexOf('/fansCoupon')>=0 && to.fullPath=='/fansInfo'){
+        window.sessionStorage.backFlag = 'true';
+      }
+      next();
+    },
     beforeRouteLeave (to, from, next) {
       $.closeModal();
-      next();
+      if(from.fullPath=='/fansInfo' && to.fullPath.indexOf('/fansCoupon')>=0){
+        if(window.sessionStorage.backFlag == 'true'){
+          this.$router.push({ path: '/fansManage' });
+        }else{
+          next();
+        }
+      }else{
+        next();
+      }
     },
     mounted() {
       let fansInfo = this.$store.state.fansInfo;
-      console.log('fansInfo：'+this.$store.state.fansInfo);
-      if(fansInfo==''){
-        let localData = localStorage.getItem("fansInfo");
-        console.log('1'+localData);
-        if(localData){
-        	console.log("localData");
-        	this.$store.commit('fansInfo', localData);
-        	this.userInfo = JSON.parse(localData);
-        }
-      }else{
-        console.log('3');
+      if(fansInfo){
         this.userInfo = JSON.parse(this.$store.state.fansInfo);
+      }else{
+        let localData = localStorage.getItem("fansInfo");
+        if(localData){
+          this.$store.commit('NEWUSER', localData);
+        }
+        this.userInfo = JSON.parse(localData);
       }
       this.unionId = this.userInfo.unionId;
-      this.initData()
+      this.initData();
     }
   }
 </script>
@@ -123,7 +140,7 @@
     border: 1px solid #eeeeee;
   }
   .couponList{
-    margin: 15px 0 60px 0;
+    margin: 15px 0 0 0;
   }
   .list{
     line-height: 20px;
@@ -140,22 +157,11 @@
     padding: 0 5px;
     text-decoration:underline;
   }
-  bottom{
-    position: fixed;
-    bottom: 0;
-    background: #FFFFFF
-  }
-  bottom a{
-    font-size: 16px;
-    width: 80%;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    /*margin: 10px 0;*/
-  }
   .weui-form-preview__ft{
     position: fixed;
     bottom: 0;
-    background: #FFFFFF
+    background: #FFFFFF;
+    padding: 15px;
   }
   .weui-form-preview__ft a{
     font-size: 16px;

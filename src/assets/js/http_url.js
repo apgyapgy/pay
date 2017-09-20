@@ -1,5 +1,5 @@
 //环境
-let localhostDev = true;
+let localhostDev = false;
 //如果是本地开发，就把localhostDev 设置成true，连接就是拼成‘http://localhost:8080/api/test’
 //生产环境，就把localhostDev 设置成false，连接就是拼成‘http://xxx.com/api/test’
 let _host= localhostDev ? 'https://dswx-test.fuiou.com/o2o-mch/' : 'https://o2omch.fuiou.com/';
@@ -32,7 +32,8 @@ let httpUrl = {
   'couponAdd': _host + '/api/coupon/add',//新增优惠券
   'couponUpdate': _host + '/api/coupon/upd',//修改优惠券
   'couponDetail': _host + 'api/coupon/dtl',//优惠券详情,
-  'couponManage':_host+'api/mch/order/qry',//优惠券管理
+  'couponManage':_host+'api/mch/order/qry',//优惠券管理(不区分可用不可用)
+  'couponQryDtl':_host+'api/coupon/qryDtl',//优惠券查询(区分可用不可用)
   'orderDetail':_host+'api/mch/order/detail',//订单详情
   'smsRefund':_host+'api/sms/refund',//发送验证码
   'orderRefund':_host+'api/mch/order/refund',//退款

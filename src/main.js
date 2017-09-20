@@ -3,7 +3,7 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
-import store from './store'
+import store from './store/index'
 import VueResource from 'vue-resource'
 import VueWechat from 'vue-wechat-title'
 import 'babel-polyfill'
@@ -14,6 +14,9 @@ import './assets/css/common.css'
 import './assets/js/fastclick.js'
 import './assets/js/jquery-weui.js'
 import './assets/js/public.js'
+import FastClick from './assets/js/fastclick'
+
+FastClick.attach(document.body);
 
 Vue.config.productionTip = false
 // Vue.prototype.$http = axios
@@ -31,7 +34,7 @@ Vue.http.interceptors.push((request, next) => {
       $.hideLoading();
     }, 500)
     if(response.data.code=='40101'){
-      window.location.href='/userLogin'
+      window.location.href='/h5/mch/#/';
     }
     return response
   });

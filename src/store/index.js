@@ -15,12 +15,15 @@ const store = new Vuex.Store({
     fansItems:''
   },
   mutations: {
-    newUser (state,info) {
+    NEWUSER (state,info) {
       state.fansInfo = info;
       window.localStorage['fansInfo'] = info;
+      console.log("NEWUSER:",info);
     },
-    newFansItem (state,item) {
+    NEWFANSITEM (state,item) {
+      console.log("NEWFANSITEM:",item);
       state.fansItems = item;
+      window.localStorage['fansItems'] = item;
     }
   }
 })

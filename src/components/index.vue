@@ -10,7 +10,7 @@
           {{data.mchNm}}
           </router-link>
         </div>
-        <div class="weui-cell__ft white">
+        <div class="weui-cell__ft white hide">
           <a href="javascript:void(0);" class="weui-cell weui-cell_access">
             <div class="weui-cell__bd" style="margin-right: 10px">退出</div>
             <span class="weui-cell__ft"></span>
@@ -41,7 +41,7 @@
             <div class="weui-cells">
               <router-link to="/orderList" class="weui-cell weui-cell_access">
                 <div class="weui-cell__hd">
-                  <img class="weui-cell_icon" src="../../static/images/search-icon.png" alt="交易查询"></div>
+                  <img class="weui-cell_icon icons" src="../../static/images/search-icon.png" alt="交易查询"></div>
                 <div class="weui-cell__bd weui-cell_primary">
                   <p>交易查询</p>
                 </div>
@@ -49,7 +49,7 @@
               </router-link>
               <router-link to="/payRecord" class="weui-cell weui-cell_access">
                 <div class="weui-cell__hd">
-                  <img class="weui-cell_icon" src="../../static/images/record-icon.png" alt="资金到账记录"></div>
+                  <img class="weui-cell_icon icons" src="../../static/images/record-icon.png" alt="资金到账记录"></div>
                 <div class="weui-cell__bd weui-cell_primary">
                   <p>资金到账记录</p>
                 </div>
@@ -57,7 +57,7 @@
               </router-link>
               <router-link to="/coupon" class="weui-cell weui-cell_access">
                 <div class="weui-cell__hd">
-                  <img class="weui-cell_icon" src="../../static/images/record-icon.png" alt="优惠券"></div>
+                  <img class="weui-cell_icon icons" src="../../static/images/coupon-icon.png" alt="优惠券"></div>
                 <div class="weui-cell__bd weui-cell_primary">
                   <p>优惠券</p>
                 </div>
@@ -65,7 +65,7 @@
               </router-link>
               <router-link :to="{ path: 'fansManage', query: { mchId:data.mchId}}" class="weui-cell weui-cell_access">
                 <div class="weui-cell__hd">
-                  <img class="weui-cell_icon" src="../../static/images/record-icon.png" alt="粉丝管理"></div>
+                  <img class="weui-cell_icon icons" src="../../static/images/fans-icon.png" alt="粉丝管理"></div>
                 <div class="weui-cell__bd weui-cell_primary">
                   <p>粉丝管理</p>
                 </div>
@@ -86,7 +86,7 @@ export default {
   data () {
     return {
       data:{},
-      mchLogo:'../../static/images/user.png',
+      mchLogo:'../images/user.png',
     }
   },
   methods: {
@@ -96,7 +96,11 @@ export default {
         if(response.data.code==200){
           if(response.data.data){
             this.data = response.data.data;
-            this.mchLogo = httpUrl.imgHost + response.data.data.mchLogo;
+            if(response.data.data.mchLogo){
+              this.mchLogo = httpUrl.imgHost + response.data.data.mchLogo;
+              window.sessionStorage.loginId = response.data.data.loginId;
+            }
+            this.$store.commit("MCHID", response.data.data.mchId);
           }
           //sessionStorage.setItem('loginId',response.data.data.loginId);
         }else {
@@ -147,5 +151,10 @@ export default {
   }
   .header .weui-cell_access .weui-cell__ft::after{
     border-color: #FFFFFF;
+  }
+  .icons{
+    width: 90px;
+    border-radius: 5px;
+    /*height: 90px;*/
   }
 </style>

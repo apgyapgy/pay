@@ -4,6 +4,7 @@ var utils = require('./utils')
 var config = require('../config')
 var vueLoaderConfig = require('./vue-loader.conf')
 var webpack = require("webpack")
+//const AssetsPlugin=require('assets-webpack-plugin');
 
 function resolve (dir) {
   return path.join(__dirname, '..', dir)
@@ -37,9 +38,28 @@ module.exports = {
       },
       {
         test: /\.js$/,
-        loader: 'babel-loader',
-        include: [resolve('src'), resolve('test')]
+        loader: "babel-loader",
+        include: [resolve('src'), resolve('test')],
+        query: {
+          plugins: [
+            "transform-runtime"
+          ],
+          presets: ['es2015', 'stage-2']
+        }
+        // exclude: /node_modules/,
+        //options: {"presets": ['es2015', {modules: false}]},
       },
+      // {
+      //   test: /\.js$/,
+      //   loader: 'babel-loader',
+      //   include: [resolve('src'), resolve('test')],
+      //   options: {
+      //     blacklist: ["useStrict"],
+      //     // "presets": [
+      //     //   ['es2015', {modules: false}]
+      //     // ],
+      //   }
+      // },
       {
         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
         loader: 'url-loader',
@@ -71,6 +91,12 @@ module.exports = {
     new webpack.ProvidePlugin({
       jQuery: "jquery",
       $: "jquery"
-    })
+    }),
+    // new AssetsPlugin({
+    //   filename:'build/webpack.assets.js',
+    //   processOutput:function(assets){
+    //     return 'window.WEBPACK_ASSETS='+JSON.stringify(assets);
+    //   }
+    // })
   ]
 }

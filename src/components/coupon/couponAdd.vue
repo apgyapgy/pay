@@ -7,13 +7,13 @@
           </span>
         </div>
         <div>
-          优惠券金额：<span><input ref="amt" type="number" v-model="couponAmt" class="inputSmall" placeholder="金额"> 元</span>
+          优惠券金额：<span><input id="amt" ref="amt" type="number" v-model="couponAmt" class="inputSmall" placeholder="金额"> 元</span>
         </div>
         <div>
           优惠券数量：<span><input ref="num" type="tel" v-model="couponNumTotal" class="inputSmall" placeholder="数量"> 张</span>
         </div>
         <div>
-          使用规则：<span>支付满 <input ref="minAmt" type="number" v-model="couponAmtMin" class="inputSmall" placeholder="金额"> 元可用</span>
+          使用规则：<span>支付满 <input id="mixAmt" ref="minAmt" type="number" v-model="couponAmtMin" class="inputSmall" placeholder="金额"> 元可用</span>
         </div>
         <div>
           有效日期：
@@ -107,26 +107,33 @@
     },
     mounted(){
     	var _this = this;
-        $(this.$refs.starttime).calendar({
-          value: this.date_default,
-          dateFormat: 'yyyy-mm-dd',
-          onOpen:function(){
-          	$(_this.$refs.name).trigger("blur");
-          	$(_this.$refs.amt).trigger("blur");
-          	$(_this.$refs.num).trigger("blur");
-          	$(_this.$refs.minAmt).trigger("blur");
-          }
-        });
-        $(this.$refs.endtime).calendar({
-          value: this.date_default,
-          dateFormat: 'yyyy-mm-dd',
-          onOpen:function(){
-          	$(_this.$refs.name).trigger("blur");
-          	$(_this.$refs.amt).trigger("blur");
-          	$(_this.$refs.num).trigger("blur");
-          	$(_this.$refs.minAmt).trigger("blur");
-          }
-        });
+      $(_this.$refs.starttime).calendar({
+        value: _this.date_default,
+        dateFormat: 'yyyy-mm-dd',
+        onOpen:function(){
+          $(_this.$refs.name).trigger("blur");
+          $(_this.$refs.amt).trigger("blur");
+          $(_this.$refs.num).trigger("blur");
+          $(_this.$refs.minAmt).trigger("blur");
+        }
+      });
+      $(_this.$refs.endtime).calendar({
+        value: _this.date_default,
+        dateFormat: 'yyyy-mm-dd',
+        onOpen:function(){
+          $(_this.$refs.name).trigger("blur");
+          $(_this.$refs.amt).trigger("blur");
+          $(_this.$refs.num).trigger("blur");
+          $(_this.$refs.minAmt).trigger("blur");
+        }
+      });
+      //金额限制输入2位数字
+      $('#amt').bind('input propertychange', function() {
+        _this.couponAmt = _this.couponAmt.replace(/^(\-)*(\d+)\.(\d\d).*$/,'$1$2.$3'); //只能输入两个小数
+      });
+      $('#mixAmt').bind('input propertychange', function() {
+        _this.couponAmtMin = _this.couponAmtMin.replace(/^(\-)*(\d+)\.(\d\d).*$/,'$1$2.$3'); //只能输入两个小数
+      });
     }
   }
 </script>

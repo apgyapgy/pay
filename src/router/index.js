@@ -24,6 +24,7 @@ import UserPwd from '@/components/user/pwd'
 Vue.use(Router)
 
 export default new Router({
+  base :'/h5/mch/',
   routes: [
     {
       path: '/',
@@ -40,6 +41,9 @@ export default new Router({
         title: '首页'
       },
       component: Index,
+      // children:[
+      //
+      // ]
     },
     {
       path: '/orderList',

@@ -5,13 +5,13 @@
         优惠券名称：<span><input type="text" v-model="coupon.couponNm" class="inputLong" placeholder="名称" :readonly="isReadonly"></span>
       </div>
       <div>
-        优惠券金额：<span><input type="number" v-model="coupon.couponAmt" class="inputSmall" placeholder="金额" :readonly="isReadonly"> 元</span>
+        优惠券金额：<span><input id="amt" type="number" v-model="coupon.couponAmt" class="inputSmall" placeholder="金额" :readonly="isReadonly"> 元</span>
       </div>
       <div>
         优惠券数量：<span><input id="couponNumTotal" type="tel" v-model="coupon.couponNumTotal" class="inputSmall" placeholder="数量" :readonly="isReadonly"> 张</span>
       </div>
       <div>
-        使用规则：<span>支付满 <input type="number" v-model="coupon.couponAmtMin" class="inputSmall" placeholder="金额" :readonly="isReadonly"> 元可用</span>
+        使用规则：<span>支付满 <input id="mixAmt" type="number" v-model="coupon.couponAmtMin" class="inputSmall" placeholder="金额" :readonly="isReadonly"> 元可用</span>
       </div>
       <div>
         有效日期：
@@ -105,8 +105,16 @@
       next();
     },
     mounted(){
-      this.initCoupon();
-    }
+      var _this = this;
+      _this.initCoupon();
+      //金额限制输入2位数字
+      $('#amt').bind('input propertychange', function() {
+        _this.coupon.couponAmt = _this.coupon.couponAmt.replace(/^(\-)*(\d+)\.(\d\d).*$/,'$1$2.$3'); //只能输入两个小数
+      });
+      $('#mixAmt').bind('input propertychange', function() {
+        _this.coupon.couponAmtMin = _this.coupon.couponAmtMin.replace(/^(\-)*(\d+)\.(\d\d).*$/,'$1$2.$3'); //只能输入两个小数
+      });
+    },
   }
 </script>
 

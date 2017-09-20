@@ -11,15 +11,26 @@ Vue.use(Vuex)
 const store = new Vuex.Store({
   state: {
     // 放置初始状态 app启动的时候的全局的初始值
-    fansInfo:{},
+    fansInfo:'',
     fansItems:''
   },
   mutations: {
-    newUser (state,info) {
+    NEWUSER (state,info){
       state.fansInfo = info;
+      localStorage.setItem("fansInfo",info);
+      //localStorage['fansInfo'] = info;
     },
-    newFansItem (state,item) {
+    NEWFANSITEM (state,item) {
       state.fansItems = item;
+      localStorage.setItem("fansItems",item);
+    }
+  },
+  actions: {
+    newUser({commit}){
+      commit("NEWUSER")
+    },
+    newFansitem({commit}){
+      commit("NEWFANSITEM")
     }
   }
 })
