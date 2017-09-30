@@ -58,17 +58,17 @@
         </div>
       </div>
     </div>
+
     <div class="weui-form-preview__ft wf">
       <div class="weui-flex wf txtCenter">
         <div class="weui-flex__item">
-          <div @click="goSendCoupon" class="weui-btn weui-btn_primary">
-            批量发送优惠券
-          </div>
+          <router-link to="/index" class="weui-btn weui-btn_default">返回首页</router-link>
         </div>
-        <!--<div class="weui-flex__item"><a href="javascript:;" class="weui-btn weui-btn_primary">批量发送消息</a></div>-->
+        <div class="weui-flex__item">
+          <a @click="goSendCoupon" class="weui-btn weui-btn_primary">批量发券</a>
+        </div>
       </div>
     </div>
-
   </div>
 </template>
 
@@ -249,27 +249,12 @@
         this.$router.push({ path: '/fansCoupon',query:{ isfrom:'fansManage'}});
       }
     },
-    beforeRouteEnter(to,from,next){
-      window.sessionStorage.backFlag = 'false';
-      if(from.fullPath.indexOf('/fansCoupon')>=0 && to.fullPath=='/fansManage'){
-        window.sessionStorage.backFlag = 'true';
-      }
-      next();
-    },
     beforeRouteLeave (to, from, next) {
       $.each(this.selectItem,function(i,obj) {
         $('#'+obj.name).picker("close");
       });
       $.closeModal();
-      if(from.fullPath == '/fansManage' && to.fullPath.indexOf('/fansCoupon')>=0){
-        if(window.sessionStorage.backFlag == 'true'){
-          this.$router.push({ path: '/index' });
-        }else{
-          next();
-        }
-      }else{
-        next();
-      }
+      next();
     },
     mounted(){//等整个视图渲染完毕，用 vm.$nextTick 替换掉 mounted
       var _this = this;
@@ -318,7 +303,7 @@
                   break;
                 case '支付宝支付':
                   _this.orderBy ='';
-                  _this.userTp = '6';
+                  _this.userTp = '1';
                   break;
               };
               console.log('选择完了');

@@ -32,7 +32,7 @@
 	export default{
 		data(){
 			return {
-				mchLogo:'../../../static/',
+				mchLogo:'static/images/user.png',
 				mchNm:''
 			}
 		},

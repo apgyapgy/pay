@@ -23,6 +23,7 @@
     </div>
     <div class="bottom">
       <a @click="updateCoupon" class="weui-btn weui-btn_primary">提交</a>
+      <router-link to="/coupon" class="weui-btn weui-btn_default">返回</router-link>
       <!--<a href="javascript:;" class="weui-btn weui-btn_default">取消</a>-->
     </div>
   </div>

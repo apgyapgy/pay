@@ -60,12 +60,12 @@
 			</div>
 			<div class="weui-dialog__bd">
 				<div>
-					<span class="block" style="line-height: 40px; text-align: left">
+					<span class="block return">
 						短信将发送至：{{mobile}}
 					</span>
-					<span class="block" style="border: 1px solid #d6d6d6; height: 40px; margin-bottom: 10px">
-						<input v-model="yzm" id="yanzm" placeholder="请输入验证码" class="fl" type="tel" style="width: 50%; padding-left: 5px; height: 36px; line-height: 36px;">
-						<a ref="sendBtn" id="sendBtn" @click="sendNumber" href="javascript:;" class="weui-btn weui-btn_mini weui-btn_primary fr" :class="{disabled:cutdownTime!=0}" style="margin: 4px; padding: 0 5px;">{{cutdownText}}</a>
+					<span class="block code-wraper">
+						<input v-model="yzm" id="yanzm" placeholder="请输入验证码" class="fl" type="tel">
+						<a ref="sendBtn" id="sendBtn" @click="sendNumber" href="javascript:;" class="weui-btn weui-btn_mini weui-btn_primary fr" :class="{disabled:cutdownTime!=0}">{{cutdownText}}</a>
 					</span>
 				</div>
 			</div>
@@ -180,6 +180,7 @@
 			},
 			showReturnMoneyModal:function(){//显示退款对话框
 				this.showDialogFlag = true;
+				this.cutdownTime = 0;
 			},
 			getUserInfo:function(){
 				var params = {};
@@ -200,14 +201,14 @@
 			},
 			cutdown:function(){
 				//console.log("down:",this.cutdownTime);
-				var _timer = null;
 				var _this = this;
+				_this.timer = null;
 				function down(){
-					window.clearTimeout(_timer);
+					window.clearTimeout(_this.timer);
 					_this.cutdownTime--;
-					//console.log(_this.cutdownTime);
-					if(_this.cutdownTime >0){
-						_timer = window.setTimeout(function(){
+					console.log(_this.cutdownTime);
+					if(_this.cutdownTime >0 ){
+						_this.timer = window.setTimeout(function(){
 							down();
 						},1000);
 					}else{
@@ -217,14 +218,18 @@
 				down();
 			},
 			cancelRefund:function(){
+				window.clearTimeout(this.timer);
 				this.showDialogFlag = false;
 				this.cutdownTime = 0;
 				this.yzm = '';
 			},
 			sureRefund:function(){
+				if(!(/^\d{6}$/.test(this.yzm))){
+					$.toast('请输入6位数验证码','text');
+					return;
+				}
 				if(this.yzm){
 					this.returnMoney();
-
 				}else{
 					$.toast("请输入验证码", "text");
 				}
@@ -233,9 +238,9 @@
 		computed:{
 			changeIcon:function(){
 				if(this.payMode == 6){
-					return '../images/aliPay-icon.png';
+					return 'static/images/aliPay-icon.png';
 				}else{
-					return '../images/wxPay-icon.png';
+					return 'static/images/wxPay-icon.png';
 				}
 			},
 			cutdownText:function(){
@@ -279,5 +284,17 @@
 	}
 	#sendBtn.disabled{
 		background:#999;
+	}
+	.weui-dialog__bd .block.return{
+		line-height: 40px; text-align: left;
+	}
+	.weui-dialog__bd .block.code-wraper{
+		border: 1px solid #d6d6d6; height: 40px; margin-bottom: 10px;
+	}
+	.weui-dialog__bd .block.code-wraper #yanzm{
+		width: 50%; padding-left: 5px; height: 36px; line-height: 36px;
+	}
+	#sendBtn{
+		margin: 4px; padding: 0 5px;
 	}
 </style>

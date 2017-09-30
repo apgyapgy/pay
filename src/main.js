@@ -34,7 +34,7 @@ Vue.http.interceptors.push((request, next) => {
       $.hideLoading();
     }, 500)
     if(response.data.code=='40101'){
-      window.location.href='/h5/mch/#/';
+      window.location.href='/o2oh5/mch/#/';
     }
     return response
   });

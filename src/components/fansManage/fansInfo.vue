@@ -30,15 +30,19 @@
         <span class="weui-loadmore__tips">暂无数据</span>
       </div>
     </div>
-    <div class="empty"></div>
+    <div class="empty"></div><div class="empty"></div>
     <div class="weui-form-preview__ft wf">
       <div class="weui-flex wf txtCenter">
         <div class="weui-flex__item">
-          <div @click="newFansItem" class="weui-btn weui-btn_primary">
-            发送优惠券
-          </div>
+          <a @click="back" class="weui-btn weui-btn_default">
+            返回
+          </a>
         </div>
-        <!--<div class="weui-flex__item"><a href="javascript:;" class="weui-btn weui-btn_primary">批量发送消息</a></div>-->
+        <div class="weui-flex__item">
+          <a @click="newFansItem" class="weui-btn weui-btn_primary">
+            发送优惠券
+          </a>
+        </div>
       </div>
     </div>
   </div>
@@ -56,6 +60,9 @@
       }
     },
     methods: {
+      back:function () {
+        this.$router.push({ path: '/fansManage' });
+      },
       newFansItem:function () {
         this.$store.commit('NEWFANSITEM', this.unionId);
         //console.log('粉丝个人：'+this.$store.state.fansItems);

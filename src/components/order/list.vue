@@ -118,9 +118,9 @@
 			},
 			chooseImg:function(mode){//根据返回的payMode显示支付宝或微信图片
 				if(mode == 0){//微信支付
-					return '../images/wxPay-icon.png';
+					return 'static/images/wxPay-icon.png';
 				}else{
-					return '../images/aliPay-icon.png';
+					return 'static/images/aliPay-icon.png';
 				}
 			}
 		},

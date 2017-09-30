@@ -1,7 +1,7 @@
 <template>
   <div id="coupon">
     <!--<router-link to="/index" class="addCouponBtn weui-btn weui-btn_default">返回首页</router-link>-->
-    <router-link to="/couponAdd" class="addCouponBtn weui-btn weui-btn_primary">+ 新增优惠券</router-link>
+    <!--<router-link to="/couponAdd" class="addCouponBtn weui-btn weui-btn_primary">+ 新增优惠券</router-link>-->
     <div class="couponList font14 txtCenter bgfff">
       <div class="weui-flex title">
         <div class="weui-flex__item">名称</div>
@@ -25,16 +25,16 @@
       </div>
     </div>
     <div class="empty"></div>
-    <!--<div class="weui-form-preview__ft wf">-->
-      <!--<div class="weui-flex wf txtCenter">-->
-        <!--<div class="weui-flex__item">-->
-            <!--<router-link to="/index" class="addCouponBtn weui-btn weui-btn_default">&lt; 返回首页</router-link>-->
-        <!--</div>-->
-        <!--<div class="weui-flex__item">-->
-          <!--<router-link to="/couponAdd" class="addCouponBtn weui-btn weui-btn_primary">+ 新增优惠券</router-link>-->
-        <!--</div>-->
-      <!--</div>-->
-    <!--</div>-->
+    <div class="weui-form-preview__ft wf">
+      <div class="weui-flex wf txtCenter">
+        <div class="weui-flex__item">
+            <router-link to="/index" class="addCouponBtn weui-btn weui-btn_default">返回首页</router-link>
+        </div>
+        <div class="weui-flex__item">
+            <router-link to="/couponAdd" class="addCouponBtn weui-btn weui-btn_primary">+ 新增优惠券</router-link>
+        </div>
+      </div>
+    </div>
 
   </div>
 </template>
@@ -105,24 +105,9 @@ export default {
       });
     },
   },
-  beforeRouteEnter(to,from,next){
-    window.sessionStorage.backFlag = 'false';
-    if(from.fullPath == '/couponAdd' && to.fullPath=='/coupon' || from.fullPath.indexOf('/couponUpdate')>=0 && to.fullPath=='/coupon'){
-      window.sessionStorage.backFlag = 'true';
-    }
-    next();
-  },
   beforeRouteLeave (to, from, next) {
     $.closeModal();
-    if(from.fullPath == '/coupon' && to.fullPath=='/couponAdd' || from.fullPath == '/coupon' && to.fullPath.indexOf('/couponUpdate')>=0){
-      if(window.sessionStorage.backFlag == 'true'){
-        this.$router.push({ path: '/index' });
-      }else{
-        next();
-      }
-    }else{
-      next();
-    }
+    next();
   },
   mounted:function () {
     this.initData();
@@ -151,17 +136,17 @@ export default {
     padding: 0 5px;
     text-decoration:underline;
   }
-  /*.weui-form-preview__ft{*/
-    /*position: fixed;*/
-    /*bottom: 0;*/
-    /*background: #FFFFFF;*/
-    /*padding: 15px;*/
-  /*}*/
-  /*.weui-form-preview__ft a{*/
-    /*font-size: 16px;*/
-    /*width: 80%;*/
-    /*margin-top: 10px;*/
-    /*margin-bottom: 10px;*/
-    /*!*margin: 10px 0;*!*/
-  /*}*/
+  .weui-form-preview__ft{
+    position: fixed;
+    bottom: 0;
+    background: #FFFFFF;
+    padding: 15px;
+  }
+  .weui-form-preview__ft a{
+    font-size: 16px;
+    width: 80%;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    /*margin: 10px 0;*/
+  }
 </style>

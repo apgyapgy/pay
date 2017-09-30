@@ -44,11 +44,15 @@
       <div class="weui-form-preview__ft wf">
         <div class="weui-flex wf txtCenter">
           <div class="weui-flex__item">
-            <div @click="sendCoupon" class="weui-btn weui-btn_primary">
-              发送
-            </div>
+            <a @click="back" class="weui-btn weui-btn_default">
+              返回
+            </a>
           </div>
-          <!--<div class="weui-flex__item"><a href="javascript:;" class="weui-btn weui-btn_primary">批量发送消息</a></div>-->
+          <div class="weui-flex__item">
+            <a @click="sendCoupon" class="weui-btn weui-btn_primary">
+              发送
+            </a>
+          </div>
         </div>
       </div>
   </div>
@@ -69,6 +73,13 @@
       }
     },
     methods: {
+      back:function () {
+        if(this.isFrom=='fansInfo'){
+          this.$router.push({ path: '/fansInfo' });
+        }else{
+          this.$router.push({ path: '/fansManage' });
+        }
+      },
       selectCoupon(event){
         $('.coupon-label').attr('isSelect','false');
         var el = event.currentTarget;

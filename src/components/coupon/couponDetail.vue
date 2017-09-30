@@ -1,10 +1,10 @@
 <template>
-  <div id="couponDetail" class="weui-form-preview">
-    <div class="weui-form-preview__hd">
+  <div id="couponDetail" class="weui-form-preview bgeee">
+    <div class="weui-form-preview__hd bgfff">
       <label class="weui-form-preview__label">优惠券金额</label>
       <em class="weui-form-preview__value">¥{{item.couponAmt}}</em>
     </div>
-    <div class="weui-form-preview__bd">
+    <div class="weui-form-preview__bd bgfff">
       <div class="weui-form-preview__item">
         <label class="weui-form-preview__label">活动ID</label>
         <span class="weui-form-preview__value">{{item.couponNo}}</span>
@@ -26,8 +26,7 @@
         <span class="weui-form-preview__value">{{item.couponLogo}}至{{item.couponLogoTeam}}</span>
       </div>
     </div>
-    <div class="empetyDiv" v-show="item.sendNum||item.sendAmt||item.usedNum||item.usedAmt||item.couponSt==1"></div>
-    <div class="weui-form-preview__bd" v-show="item.sendNum||item.sendAmt||item.usedNum||item.usedAmt||item.couponSt==1">
+    <div class="weui-form-preview__bd marginTp bgfff" v-show="item.sendNum||item.sendAmt||item.usedNum||item.usedAmt||item.couponSt==1">
       <div class="weui-form-preview__item" v-show="item.sendNum">
         <label class="weui-form-preview__label">已发放数量</label>
         <span class="weui-form-preview__value">{{item.sendNum}}张</span>
@@ -48,6 +47,9 @@
         <label class="weui-form-preview__label">距活动结束还有</label>
         <span class="weui-form-preview__value">{{item.leftDays}}天</span>
       </div>
+    </div>
+    <div class="bottom">
+      <router-link to="/coupon" class="weui-btn weui-btn_primary">返回</router-link>
     </div>
   </div>
 </template>
@@ -93,9 +95,11 @@
   }
 </script>
 
-<style scoped >
-  .empetyDiv{
-    background: #eeeeee;
-    height: 10px;
+<style scoped>
+  .marginTp{
+    margin-top: 10px;
+  }
+  .bottom{
+    margin: 20px 15px;
   }
 </style>

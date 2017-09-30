@@ -86,7 +86,7 @@ export default {
   data () {
     return {
       data:{},
-      mchLogo:'../images/user.png',
+      mchLogo:'static/images/user.png',
     }
   },
   methods: {
@@ -117,6 +117,9 @@ export default {
   },
   mounted() {
     this.initData()
+//    window.addEventListener("popstate", function(e) {
+//        console.log('返回');
+//    })
   }
 }
 </script>

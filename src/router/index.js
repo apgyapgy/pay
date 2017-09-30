@@ -24,7 +24,9 @@ import UserPwd from '@/components/user/pwd'
 Vue.use(Router)
 
 export default new Router({
-  base :'/h5/mch/',
+  mode: 'hash',    //路由的模式
+  //base :'/h5/mch/', //测试环境
+  base :'/o2oh5/mch/',//生产环境
   routes: [
     {
       path: '/',
