@@ -1,7 +1,9 @@
 <template>
   <div id="coupon">
-    <!--<router-link to="/index" class="addCouponBtn weui-btn weui-btn_default">返回首页</router-link>-->
-    <!--<router-link to="/couponAdd" class="addCouponBtn weui-btn weui-btn_primary">+ 新增优惠券</router-link>-->
+    <div>
+      <router-link to="/index" class="addCouponBtn weui-btn weui-btn_default">返回首页</router-link>
+      <router-link to="/couponAdd" class="addCouponBtn weui-btn weui-btn_primary">新增优惠券</router-link>
+    </div>
     <div class="couponList font14 txtCenter bgfff">
       <div class="weui-flex title">
         <div class="weui-flex__item">名称</div>
@@ -24,18 +26,6 @@
         <span class="weui-loadmore__tips">暂无数据</span>
       </div>
     </div>
-    <div class="empty"></div>
-    <div class="weui-form-preview__ft wf">
-      <div class="weui-flex wf txtCenter">
-        <div class="weui-flex__item">
-            <router-link to="/index" class="addCouponBtn weui-btn weui-btn_default">返回首页</router-link>
-        </div>
-        <div class="weui-flex__item">
-            <router-link to="/couponAdd" class="addCouponBtn weui-btn weui-btn_primary">+ 新增优惠券</router-link>
-        </div>
-      </div>
-    </div>
-
   </div>
 </template>
 <script type="text/ecmascript-6">
@@ -137,10 +127,10 @@ export default {
     text-decoration:underline;
   }
   .weui-form-preview__ft{
-    position: fixed;
-    bottom: 0;
-    background: #FFFFFF;
-    padding: 15px;
+    /*position: fixed;*/
+    /*bottom: 0;*/
+    /*background: #FFFFFF;*/
+    /*padding: 15px;*/
   }
   .weui-form-preview__ft a{
     font-size: 16px;

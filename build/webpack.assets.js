@@ -1,0 +1,1 @@
+window.WEBPACK_ASSETS={"app":{"js":"/app.js"},"common.js":{"js":"/common.js.js"}}

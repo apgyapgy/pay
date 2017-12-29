@@ -3,7 +3,8 @@
     <div class="header">
       <div class="weui-cell">
         <div class="weui-cell__hd">
-          <img class="userPhoto fl" :src="mchLogo">
+          <img class="userPhoto fl" src="https://staticds.fuiou.com/sys/ds/o2oh5/mch/static/images/user.png">
+          <!--<img class="userPhoto fl" :src="mchLogo">-->
         </div>
         <div class="weui-cell__bd">
           <router-link to="/user" class="weui-cell weui-cell_access">
@@ -12,7 +13,7 @@
         </div>
         <div class="weui-cell__ft white hide">
           <a href="javascript:void(0);" class="weui-cell weui-cell_access">
-            <div class="weui-cell__bd" style="margin-right: 10px">退出</div>
+            <div class="weui-cell__bd">退出</div>
             <span class="weui-cell__ft"></span>
           </a>
         </div>
@@ -33,48 +34,81 @@
                   <span class="block font12">今日收款金额(元)</span>
                 </div>
                 <div class="weui-form-preview__btn weui-form-preview__btn_default">
-                  <span id="dailyNum" class="block blue font25">{{data.dailyNum}}</span>
+                  <span id="dailyNum" class="block blue font25">{{data.dealNum}}</span>
                   <span class="block font12">今日收款笔数</span>
                 </div>
               </div>
             </div>
-            <div class="weui-cells">
-              <router-link to="/orderList" class="weui-cell weui-cell_access">
-                <div class="weui-cell__hd">
-                  <img class="weui-cell_icon icons" src="../../static/images/search-icon.png" alt="交易查询"></div>
-                <div class="weui-cell__bd weui-cell_primary">
-                  <p>交易查询</p>
-                </div>
-                <span class="weui-cell__ft"></span>
-              </router-link>
-              <router-link to="/payRecord" class="weui-cell weui-cell_access">
-                <div class="weui-cell__hd">
-                  <img class="weui-cell_icon icons" src="../../static/images/record-icon.png" alt="资金到账记录"></div>
-                <div class="weui-cell__bd weui-cell_primary">
-                  <p>资金到账记录</p>
-                </div>
-                <span class="weui-cell__ft"></span>
-              </router-link>
-              <router-link to="/coupon" class="weui-cell weui-cell_access">
-                <div class="weui-cell__hd">
-                  <img class="weui-cell_icon icons" src="../../static/images/coupon-icon.png" alt="优惠券"></div>
-                <div class="weui-cell__bd weui-cell_primary">
-                  <p>优惠券</p>
-                </div>
-                <span class="weui-cell__ft"></span>
-              </router-link>
-              <router-link :to="{ path: 'fansManage', query: { mchId:data.mchId}}" class="weui-cell weui-cell_access">
-                <div class="weui-cell__hd">
-                  <img class="weui-cell_icon icons" src="../../static/images/fans-icon.png" alt="粉丝管理"></div>
-                <div class="weui-cell__bd weui-cell_primary">
-                  <p>粉丝管理</p>
-                </div>
-                <span class="weui-cell__ft"></span>
-              </router-link>
-            </div>
           </div>
         </div>
       </div>
+    </div>
+    <div class="weui-grids wf">
+      <router-link :to="{ path: 'orderManage'}" class="weui-grid js_grid">
+        <div class="weui-grid__icon">
+          <img src="https://staticds.fuiou.com/sys/ds/o2oh5/mch/static/images/search-icon.png" alt="交易查询">
+        </div>
+        <p class="weui-grid__label">
+          交易查询
+        </p>
+      </router-link>
+      <router-link to="/payRecord" class="weui-grid js_grid">
+        <div class="weui-grid__icon">
+          <img src="https://staticds.fuiou.com/sys/ds/o2oh5/mch/static/images/record-icon.png" alt="到账记录">
+        </div>
+        <p class="weui-grid__label">
+          到账记录
+        </p>
+      </router-link>
+      <router-link to="/coupon" class="weui-grid js_grid">
+        <div class="weui-grid__icon">
+          <img src="https://staticds.fuiou.com/sys/ds/o2oh5/mch/static/images/coupon-icon.png" alt="优惠券">
+        </div>
+        <p class="weui-grid__label">
+          优惠券
+        </p>
+      </router-link>
+      <router-link :to="{ path: 'fansManage', query: { mchId:data.mchId}}" class="weui-grid js_grid">
+        <div class="weui-grid__icon">
+          <img src="https://staticds.fuiou.com/sys/ds/o2oh5/mch/static/images/fans-icon.png" alt="粉丝管理">
+        </div>
+        <p class="weui-grid__label">
+          粉丝管理
+        </p>
+      </router-link>
+      <router-link :to="{ path: 'productManage'}" class="weui-grid js_grid">
+        <div class="weui-grid__icon">
+          <img src="https://staticds.fuiou.com/sys/ds/o2oh5/mch/static/images/product-icon.png" alt="产品管理">
+        </div>
+        <p class="weui-grid__label">
+          商品管理
+        </p>
+      </router-link>
+      <router-link :to="{ path: 'tradeCount'}" class="weui-grid js_grid">
+        <div class="weui-grid__icon">
+          <img src="https://staticds.fuiou.com/sys/ds/o2oh5/mch/static/images/trade-icon.png" alt="交易统计">
+        </div>
+        <p class="weui-grid__label">
+          台卡交易统计
+        </p>
+      </router-link>
+      <router-link v-show="data.vipMode!=2" :to="{ path: 'receivable'}" class="weui-grid js_grid">
+        <div class="weui-grid__icon">
+          <img src="https://staticds.fuiou.com/sys/ds/o2oh5/mch/static/images/receivable-icon.png" alt="超级卡收款">
+        </div>
+        <p class="weui-grid__label">
+          超级卡收款
+        </p>
+      </router-link>
+      <!--<router-link :to="{ path: 'account'}" class="weui-grid js_grid">-->
+      <router-link v-show="data.vipMode==1" :to="{ path: 'account'}" class="weui-grid js_grid">
+        <div class="weui-grid__icon">
+          <img src="https://staticds.fuiou.com/sys/ds/o2oh5/mch/static/images/account-icon.png" alt="每日对账">
+        </div>
+        <p class="weui-grid__label">
+          每日对账
+        </p>
+      </router-link>
     </div>
   </div>
 </template>
@@ -86,7 +120,7 @@ export default {
   data () {
     return {
       data:{},
-      mchLogo:'static/images/user.png',
+      mchLogo:'https://staticds.fuiou.com/sys/ds/o2oh5/mch/static/images/user.png',
     }
   },
   methods: {
@@ -115,11 +149,9 @@ export default {
     $.closeModal();
     next();
   },
-  mounted() {
-    this.initData()
-//    window.addEventListener("popstate", function(e) {
-//        console.log('返回');
-//    })
+  mounted(){
+    sessionStorage.removeItem("fromOrder");
+    this.initData();
   }
 }
 </script>
@@ -141,7 +173,7 @@ export default {
   }
   .index-money{
     text-align: center;
-    padding: 40px 0 30px 0;
+    padding: 15px 0 15px 0;
   }
   .index-money .totalAmt{
     font-size: 50px;

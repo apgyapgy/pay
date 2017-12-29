@@ -14,7 +14,7 @@
         </span>
       <p class="login-btn">
         <a id="login" @click="login" class="weui-btn weui-btn_primary">登录</a>
-        <router-link to="/userPwd" class="forgetPwd font14">忘记密码</router-link>
+        <router-link :to="{path: 'userPwd',query:{mobile:loginId}}" class="forgetPwd font14">忘记密码</router-link>
       </p>
     </div>
   </div>
@@ -33,7 +33,16 @@
       }
     },
     methods: {
+      //var cookie = publicJs.getCookie('');
       login() {
+        if(!this.loginId){
+          $.alert('请输入手机号');
+          return
+        }
+        if(!this.loginPwd){
+          $.alert('请输入密码');
+          return
+        }
         var params = {
           loginId: this.loginId,
           loginPwd: this.loginPwd,
@@ -41,7 +50,10 @@
         };
         this.$http.jsonp(httpUrl.login, {params: Object.assign(params, httpUrl.com_params)}).then((response) => {
           if(response.data.code==200){
-            this.$router.push({ path: '/index' })
+            sessionStorage.setItem('sessionId',response.data.token);
+            window.location.href = httpUrl.hrefUrl +'index';
+            //this.$router.push({ path: '/index' })
+            //this.$router.push({ name: 'index'});
           }else {
             $.alert(response.data.desc);
           }

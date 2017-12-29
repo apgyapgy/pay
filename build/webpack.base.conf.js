@@ -4,7 +4,6 @@ var utils = require('./utils')
 var config = require('../config')
 var vueLoaderConfig = require('./vue-loader.conf')
 var webpack = require("webpack")
-//const AssetsPlugin=require('assets-webpack-plugin');
 
 function resolve (dir) {
   return path.join(__dirname, '..', dir)
@@ -12,11 +11,11 @@ function resolve (dir) {
 
 module.exports = {
   entry: {
-    app: './src/main.js'
+    app: ["babel-polyfill",'./src/main.js']
   },
   output: {
     path: config.build.assetsRoot,
-    filename: '[name].js',
+    filename: '[name].[hash:10].js',
     publicPath: process.env.NODE_ENV === 'production'
       ? config.build.assetsPublicPath
       : config.dev.assetsPublicPath
@@ -31,6 +30,10 @@ module.exports = {
   },
   module: {
     rules: [
+      {
+        test: /\.less$/,
+        loader: 'style-loader!css-loader!less-loader'
+      },
       {
         test: /\.vue$/,
         loader: 'vue-loader',
@@ -49,17 +52,6 @@ module.exports = {
         // exclude: /node_modules/,
         //options: {"presets": ['es2015', {modules: false}]},
       },
-      // {
-      //   test: /\.js$/,
-      //   loader: 'babel-loader',
-      //   include: [resolve('src'), resolve('test')],
-      //   options: {
-      //     blacklist: ["useStrict"],
-      //     // "presets": [
-      //     //   ['es2015', {modules: false}]
-      //     // ],
-      //   }
-      // },
       {
         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
         loader: 'url-loader',

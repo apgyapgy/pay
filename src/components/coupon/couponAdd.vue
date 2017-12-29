@@ -22,6 +22,11 @@
             <input type="text" ref="endtime" class="inputDate coupon-time" placeholder="结束日期" readonly>
           </span>
         </div>
+        <div>
+          是否在收银台展示：
+          <i :class="couponShowSt==1?'weui-icon-success':'weui-icon-circle'" @click="changeShow()"></i>是
+          <!--<i :class="isShow?'weui-icon-success':'weui-icon-circle'" @click="changeShow(1)"></i>否-->
+        </div>
       </div>
       <div class="bottom">
         <a @click="addCoupon" href="javascript:;" class="weui-btn weui-btn_primary">提交</a>
@@ -43,9 +48,25 @@
         date_default:[],
         dateStart:'',
         dateEnd:'',
+        couponShowSt:0,
+      }
+    },
+    watch:{
+      couponNumTotal:function(val){
+        if(val&&val>30000){
+          this.couponNumTotal = 30000;
+          $.alert('优惠券数量不能超过3万');
+        }
       }
     },
     methods: {
+      changeShow(){
+        if(this.couponShowSt==0){
+          this.couponShowSt=1
+        }else{
+          this.couponShowSt=0
+        }
+      },
       addCoupon(){
         if(!this.$refs.name.value){
           $.alert('优惠券名称不能为空');
@@ -84,6 +105,7 @@
             couponAmt: publicJs.accMul(_this.couponAmt,100),
             couponNumTotal: _this.couponNumTotal,
             couponAmtMin: publicJs.accMul(_this.couponAmtMin,100),
+            couponShowSt: this.couponShowSt
           };
           console.log('params'+JSON.stringify(params));
           _this.$http.jsonp(httpUrl.couponAdd, {params: Object.assign(params, httpUrl.com_params)}).then((response) => {

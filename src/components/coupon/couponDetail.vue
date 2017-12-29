@@ -21,6 +21,10 @@
         <label class="weui-form-preview__label">使用规则</label>
         <span class="weui-form-preview__value">满{{item.couponAmtMin}}元可用</span>
       </div>
+      <div>
+        <label class="weui-form-preview__label">是否在收银台展示</label>
+        <span class="weui-form-preview__value">{{item.couponShowSt==1?'是':'否'}}</span>
+      </div>
       <div class="weui-form-preview__item">
         <label class="weui-form-preview__label">优惠券有效期</label>
         <span class="weui-form-preview__value">{{item.couponLogo}}至{{item.couponLogoTeam}}</span>

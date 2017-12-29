@@ -94,6 +94,17 @@ let publicJs = {
     var strDate = time.replace(/^(\d{4})(\d{2})(\d{2})$/, "$1-$2-$3"); //精确到日
     return strDate;
   },
+  //获取Cookie值
+  getCookie(sName){
+    var aCookie = document.cookie.split("; ");
+    for (var i=0; i < aCookie.length; i++)
+    {
+    var aCrumb = aCookie[i].split("=");
+    if (sName == aCrumb[0])
+    return unescape(aCrumb[1]);
+    }
+    return null;
+  },
   //获取地址栏参数
   getAddressParam(name){
     var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
@@ -129,16 +140,113 @@ let publicJs = {
     try {m += s2.split(".")[1].length} catch (e) {}
     return Number(s1.replace(".", "")) * Number(s2.replace(".", "")) / Math.pow(10, m)
   },
-  //加法函数，用来得到精确的加法结果
-  //说明：javascript的加法 结果会有误差，在两个浮点数相加的时候会比较明显。这个函数返回较为精确的加法结果。
-  //调用：accAdd(arg1,arg2)
-  // 返回值：arg1加上arg2的精确结果
-  accAdd(arg1, arg2){
-    var r1, r2, m;
-    try {r1 = arg1.toString().split(".")[1].length} catch (e) {r1 = 0}
-    try {r2 = arg2.toString().split(".")[1].length} catch (e) {r2 = 0}
-    m = Math.pow(10, Math.max(r1, r2))
-    return (arg1 * m + arg2 * m) / m
+  /**
+   ** 加法函数，用来得到精确的加法结果
+   ** 说明：javascript的加法结果会有误差，在两个浮点数相加的时候会比较明显。这个函数返回较为精确的加法结果。
+   ** 调用：accAdd(arg1,arg2)
+   ** 返回值：arg1加上arg2的精确结果
+   **/
+  accAdd(arg1, arg2) {
+    var r1, r2, m, c;
+    try {
+      r1 = arg1.toString().split(".")[1].length;
+    }
+    catch (e) {
+      r1 = 0;
+    }
+    try {
+      r2 = arg2.toString().split(".")[1].length;
+    }
+    catch (e) {
+      r2 = 0;
+    }
+    c = Math.abs(r1 - r2);
+    m = Math.pow(10, Math.max(r1, r2));
+    if (c > 0) {
+      var cm = Math.pow(10, c);
+      if (r1 > r2) {
+        arg1 = Number(arg1.toString().replace(".", ""));
+        arg2 = Number(arg2.toString().replace(".", "")) * cm;
+      } else {
+        arg1 = Number(arg1.toString().replace(".", "")) * cm;
+        arg2 = Number(arg2.toString().replace(".", ""));
+      }
+    } else {
+      arg1 = Number(arg1.toString().replace(".", ""));
+      arg2 = Number(arg2.toString().replace(".", ""));
+    }
+    return (arg1 + arg2) / m;
+  },
+  updateTitle(title) {
+    document.title = title
+    var mobile = navigator.userAgent.toLowerCase()
+    if (/iphone|ipad|ipod/.test(mobile)) {
+      var iframe = document.createElement('iframe')
+      iframe.style.display = 'none'
+      // 替换成站标favicon路径或者任意存在的较小的图片即可
+      iframe.setAttribute('src', 'static/user.png')
+      var iframeCallback = function () {
+        setTimeout(function () {
+          iframe.removeEventListener('load', iframeCallback)
+          document.body.removeChild(iframe)
+        }, 0)
+      }
+      iframe.addEventListener('load', iframeCallback)
+      document.body.appendChild(iframe)
+    }
+  },
+  compress(objImg){
+    // 用于压缩图片的canvas
+    var canvas = document.createElement('canvas')
+    var ctx = canvas.getContext('2d')
+    // 瓦片canvas
+    var tCanvas = document.createElement('canvas')
+    var tctx = tCanvas.getContext('2d')
+    // 100 kb
+    var maxSize = 600 * 1024;//// 不触发压缩行为的最大文件大小（100 * 1024表示100kb），注意，这并不代表压缩后一定会压缩到该大小以下
+
+    var initSize = objImg.src.length
+    var width = objImg.width
+    var height = objImg.height
+    // 如果图片大于400万像素，计算压缩比并将大小压至400万以下
+    var ratio
+    if ((ratio = width * height / 4000000) > 1) {
+      ratio = Math.sqrt(ratio)
+      width /= ratio
+      height /= ratio
+    } else {
+      ratio = 1
+    }
+    canvas.width = width
+    canvas.height = height
+    // 铺底色
+    ctx.fillStyle = '#fff'
+    ctx.fillRect(0, 0, canvas.width, canvas.height)
+    // 如果图片像素大于100万则使用瓦片绘制
+    var count
+    if ((count = width * height / 1000000) > 1) {
+      // 计算要分成多少块瓦片
+      count = ~~(Math.sqrt(count) + 1)
+      var nw = ~~(width / count)
+      var nh = ~~(height / count)
+      tCanvas.width = nw
+      tCanvas.height = nh
+      for (var i = 0; i < count; i++) {
+        for (var j = 0; j < count; j++) {
+          tctx.drawImage(objImg, i * nw * ratio, j * nh * ratio, nw * ratio, nh * ratio, 0, 0, nw, nh)
+          ctx.drawImage(tCanvas, i * nw, j * nh, nw, nh)
+        }
+      }
+    } else {
+      ctx.drawImage(objImg, 0, 0, width, height)
+    }
+    // 进行最小压缩
+    var nData = canvas.toDataURL('image/jpeg', 0.1)
+    console.log('压缩前：' + initSize)
+    console.log('压缩后：' + nData.length)
+    console.log('压缩率：' + ~~(100 * (initSize - nData.length) / initSize) + '%')
+    tCanvas.width = tCanvas.height = canvas.width = canvas.height = 0
+    return nData
   },
 }
 //给Number类型增加一个div方法，调用起来更加 方便。
@@ -155,5 +263,4 @@ Number.prototype.mul = function (arg){
 Number.prototype.add = function (arg){
   return publicJs.accAdd(arg,this);
 }
-
 export {publicJs}

@@ -197,51 +197,6 @@ input:required,input:invalid {
   border-radius: 5px
 }
 
-
-.main-title {
-  text-align: center;
-  font-size: 34px;
-  color: #3cc51f;
-  font-weight: 400;
-  margin: 0 15%;
-}
-
-.main-sub-title {
-  text-align: center;
-  color: #333;
-  font-size: 14px;
-  font-weight: bold;
-}
-.mchLogo{
-  border-radius: 100%;
-  width: 80px;
-  height: 80px;
-  padding: 5px;
-  background: #FFFFFF;
-}
-.main-header {
-  padding: 20px 0;
-}
-
-.main-panel{
-  margin: 0 20px;
-}
-.main-con{
-  padding: 0 5px;
-  border: 1px solid #999;
-  height: 60px;
-  line-height: 60px;
-  border-radius: 4px;
-  background: #FFFFFF;
-  font-size: 22px;
-}
-.main-input{
-  width: 70%;
-  height: 58px;
-  line-height: 58px;
-  float: right;
-  text-align: right;
-}
 .main-tip{
   font-size: 14px;
   color: #007aff;
@@ -261,47 +216,6 @@ input:required,input:invalid {
 }
 .weui-footer{
   margin-top: 30px;
-}
-
-.main-footer {
-  width: 100%;
-  position: absolute;
-  bottom: 0;
-  text-align: center
-}
-.main-footer p{
-  font-size: 14px;
-  color: #666;
-  line-height: 30px;
-  text-align: center;
-}
-.main-table a{
-  display: block;
-  color: #000000;
-  font-size: 24px;
-}
-.main-table tr,.main-table td{
-  border: 1px solid #999;
-  height: 60px;
-  line-height: 60px;
-  background: #FFFFFF;
-  font-weight: bold;
-}
-.main-table .border-left0{
-  border-left: 0;
-}
-.main-table .border-right0{
-  border-right: 0;
-}
-.main-table .border-bottom0{
-  border-bottom: 0;
-}
-.main-table td.pay{
-  background: #3cc51f;
-  color: #FFFFFF;
-}
-.main-table a.white{
-  color: #FFFFFF;
 }
 
 footer a {
@@ -334,7 +248,7 @@ footer a {
   color: #999999;
 }
 .black{
-  color: #333333;
+  color: #000000;
 }
 .blue{
   color: #0fa8ff;
@@ -344,6 +258,9 @@ footer a {
 }
 .red{
   color: #f43530;
+}
+.yellow{
+  color: #ff6600;
 }
 .color6{
   color: #666;
@@ -430,5 +347,5 @@ footer a {
   text-align: center;
 }
 .empty{
-  height: 80px;
+  height: 150px;
 }

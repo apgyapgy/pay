@@ -12,7 +12,7 @@ const store = new Vuex.Store({
   state: {
     // 放置初始状态 app启动的时候的全局的初始值
     fansInfo:'',
-    fansItems:''
+    fansItems:'',
   },
   mutations: {
     NEWUSER (state,info){
@@ -23,7 +23,7 @@ const store = new Vuex.Store({
     NEWFANSITEM (state,item) {
       state.fansItems = item;
       localStorage.setItem("fansItems",item);
-    }
+    },
   },
   actions: {
     newUser({commit}){
@@ -31,7 +31,7 @@ const store = new Vuex.Store({
     },
     newFansitem({commit}){
       commit("NEWFANSITEM")
-    }
+    },
   }
 })
 // 整合初始状态和变更函数，我们就得到了我们所需的 store

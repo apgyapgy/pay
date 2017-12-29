@@ -22,10 +22,10 @@
 		            <label class="weui-form-preview__label">应收金额</label>
 		            <span class="weui-form-preview__value orderAmtYuan">{{detail.orderAmtOrgYuan}}</span>
 		        </div>
-            <div class="weui-form-preview__item" v-show="detail.showCoupon">
-              <label class="weui-form-preview__label">优惠金额</label>
-              <span class="weui-form-preview__value orderAmtYuan">{{detail.couponAmtYuan}}</span>
-            </div>
+	            <div class="weui-form-preview__item" v-show="detail.showCoupon">
+	              <label class="weui-form-preview__label">优惠金额</label>
+	              <span class="weui-form-preview__value orderAmtYuan">{{detail.couponAmtYuan}}</span>
+	            </div>
 		        <div class="weui-form-preview__item">
 		            <label class="weui-form-preview__label">商户名称</label>
 		            <span class="weui-form-preview__value">{{detail.mchNm}}</span>
@@ -48,8 +48,9 @@
 		        </div>
 		    </div>
 		</div>
-		<div v-show="detail.canRefund" class="weui-form-preview__bd">
-		    <a @click="showReturnMoneyModal" id="returnMoney" href="javascript:;" class="weui-btn weui-btn_primary">申请退款</a>
+		<div class="weui-form-preview__bd">
+		    <a v-show="detail.canRefund" @click="showReturnMoneyModal" id="returnMoney" href="javascript:;" class="weui-btn weui-btn_primary">申请退款</a>
+        <router-link :to="{path:'orderManage',query:{isFrom:'taikaOrder',payMode:payMode,orderSt:orderSt,orderDt:orderDt}}" class="weui-btn weui-btn_default">返回</router-link>
 		    <p class="line36 txtCenter">客服电话：95138</p>
 		</div>
 
@@ -77,17 +78,14 @@
 	</div>
 </template>
 <script>
-    $(function() {
-        FastClick.attach(document.body);
-    });
-</script>
-<script>
 	import {httpUrl} from '../../assets/js/http_url.js';
 	export default{
 		data(){
 			return{
 				orderNo:'',
 				payMode:'',
+				orderSt:'',
+				orderDt:'',
 				detail:{},
 				mobile:'',//loginId
 				cutdownTime:0,
@@ -238,9 +236,9 @@
 		computed:{
 			changeIcon:function(){
 				if(this.payMode == 6){
-					return 'static/images/aliPay-icon.png';
+					return 'https://staticds.fuiou.com/sys/ds/o2oh5/mch/static/images/aliPay-icon.png';
 				}else{
-					return 'static/images/wxPay-icon.png';
+					return 'https://staticds.fuiou.com/sys/ds/o2oh5/mch/static/images/wxPay-icon.png';
 				}
 			},
 			cutdownText:function(){
@@ -255,9 +253,22 @@
 			if(this.$route.query.orderNo){
 				this.orderNo = this.$route.query.orderNo;
 			}
-			if(this.$route.query.payMode){
+			if(this.$route.query.payMode || this.$route.query.payMode==0){
 				this.payMode = this.$route.query.payMode;
 			}
+			if(this.$route.query.orderSt){
+				this.orderSt = this.$route.query.orderSt;
+			}
+			if(this.$route.query.orderDt  || this.$route.query.orderDt==0){
+				this.orderDt = this.$route.query.orderDt;
+			}
+			var obj= {
+				isFrom:'taikaOrder',
+				payMode:this.payMode,
+				orderSt:this.orderSt,
+				orderDt:this.orderDt
+			};
+			sessionStorage.setItem("fromOrder",JSON.stringify(obj));
 			this.initData();
 			var _this = this;
 			$("#sendBtn").click(function(){

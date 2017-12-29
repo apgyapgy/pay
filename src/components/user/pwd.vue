@@ -7,7 +7,7 @@
 		    <div>
 		        <span class="block pwd-span">
 		            <input v-model="mobile" id="loginId" class="mobile-input font14" placeholder="请输入手机号" type="tel" maxlength="11">
-		            <a @click="sendNumber" id="getNumber"  class="fr pwd-yzm weui-btn weui-btn_mini weui-btn_primary">获取验证码</a>
+		            <a @click="sendNumber" id="getNumber" class="fr pwd-yzm weui-btn weui-btn_mini weui-btn_primary">获取验证码</a>
 		        </span>
 		        <span class="block pwd-span">
 		            <input v-model="code" id="code" class="pwd-input font14" placeholder="请输入验证码" type="tel">
@@ -19,17 +19,13 @@
 		            <input v-model="newPwdRepeat" id="newPwd2" class="pwd-input font14" placeholder="请确认新密码" type="password">
 		        </span>
 		        <p class="login-btn">
-		            <a @click="resetPwd" id="resetPwd" class="weui-btn weui-btn_primary">提交</a>
+		            <a @click="resetPwd" id="resetPwd" class="weui-btn weui-btn_primary">提 交</a>
+		            <router-link to="/user" class="weui-btn weui-btn_default">返 回</router-link>
 		        </p>
 		    </div>
 		</div>
 	</div>
 </template>
-<script>
-    $(function() {
-        FastClick.attach(document.body);
-    });
-</script>
 <script>
 	import {httpUrl} from '../../assets/js/http_url.js';
 	export default{
@@ -39,7 +35,7 @@
 				newPwd:'',//新密码
 				newPwdRepeat:'',//确认密码
 				code:'',//验证码
-				loginPwdOld:''//旧密码
+				loginPwdOld:'',//旧密码
 			}
 		},
 		methods:{
@@ -52,13 +48,24 @@
 			        }).then((response)=>{
 			        	if(response.data.code != 200){
 			        		$.alert(response.data.desc);
+			        	}else{
+			        		$.alert('验证码已发送至手机<br/>'+this.mobile);
 			        	}
 			        },(response)=>{});
 		        }
 		    },
 		    resetPwd:function(){
-		    	if(!this.code || !this.newPwd || !this.newPwdRepeat){
-		    		$.alert("请填写验证码和密码");
+		    	if(!this.mobile){
+		    		$.alert("手机号不能为空");
+		    		return
+		    	}
+		    	if(!this.code){
+		    		$.alert("验证码不能为空");
+		    		return
+		    	}
+		    	if(!this.newPwd || !this.newPwdRepeat){
+		    		$.alert("新密码不能为空");
+		    		return
 		    	}else{
 		    		if(this.newPwd == this.newPwdRepeat){
 		    			this.$http.jsonp(httpUrl.resetPwd,{
@@ -79,7 +86,7 @@
 		    				}
 		    			},(response)=>{})
 		            }else{
-		                $.alert('两次输入密码不一致');
+		                $.alert('新密码两次输入不一致');
 		            }
 		    	}
 		    }

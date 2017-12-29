@@ -11,22 +11,40 @@ import FansManage  from '@/components/fansManage/fansManage'
 import FansInfo from '@/components/fansManage/fansInfo'
 import FansCoupon from '@/components/fansManage/fansCoupon'
 /*交易查询*/
-import OrderList from '@/components/order/list'
-import OrderPayDetail from '@/components/order/paydetail'
+import OrderList from '@/components/order/orderList'
+import PayDetail from '@/components/order/payDetail'
+/*订单管理*/
+import OrderManage from '@/components/order/orderManage'
+import OrderDtl from '@/components/order/orderDtl'
+import SuperPayDetail from '@/components/order/superPayDetail'
+
 /*资金到账*/
-import PayRecord from '@/components/payRecord/recode'
+import PayRecord from '@/components/payRecord/payRecord'
 /*用户*/
 import UserLogin from '@/components/user/userLogin'
 import User from '@/components/user/user'
 import UserInfo from '@/components/user/info'
 import UserPwd from '@/components/user/pwd'
+import Shop from '@/components/user/shop'
+/*产品管理*/
+import ProductManage from '@/components/product/productManage'
+import ProductDtl from '@/components/product/productDtl'
+/*交易统计*/
+import TradeCount from '@/components/trade/tradeCount'
+
+/*超级卡收款*/
+import Receivable from '@/components/receivables/receivable'
+import Result from '@/components/receivables/result'
+
+/*每日对账*/
+import Account from '@/components/account/account'
 
 Vue.use(Router)
 
 export default new Router({
   mode: 'hash',    //路由的模式
   //base :'/h5/mch/', //测试环境
-  base :'/o2oh5/mch/',//生产环境
+  //base :'/o2oh5/mch/',//生产环境
   routes: [
     {
       path: '/',
@@ -43,9 +61,6 @@ export default new Router({
         title: '首页'
       },
       component: Index,
-      // children:[
-      //
-      // ]
     },
     {
       path: '/orderList',
@@ -56,12 +71,12 @@ export default new Router({
       component: OrderList,
     },
     {
-      path: '/orderPayDetail',
-      name: 'orderPayDetail',
+      path: '/payDetail',
+      name: 'payDetail',
       meta: {
         title: '交易详情'
       },
-      component: OrderPayDetail,
+      component: PayDetail,
     },
     {
       path: '/payRecord',
@@ -147,9 +162,89 @@ export default new Router({
     	path:'/userPwd',
     	name:'userPwd',
     	meta:{
-    		title:'找回密码'
+    		title:'密码'
     	},
     	component:UserPwd
+    },
+    {
+      path:'/productManage',
+      name:'productManage',
+      meta:{
+        title:'商品管理'
+      },
+      component:ProductManage
+    },
+    {
+      path:'/productDtl',
+      name:'productDtl',
+      meta:{
+        title:'添加商品'
+      },
+      component:ProductDtl
+    },
+    {
+      path:'/orderManage',
+      name:'orderManage',
+      meta:{
+        title:'订单管理'
+      },
+      component:OrderManage
+    },
+    {
+      path:'/orderDtl',
+      name:'orderDtl',
+      meta:{
+        title:'订单详情'
+      },
+      component:OrderDtl
+    },
+    {
+      path:'/superPayDetail',
+      name:'superPayDetail',
+      meta:{
+        title:'订单详情'
+      },
+      component:SuperPayDetail
+    },
+    {
+      path:'/shop',
+      name:'shop',
+      meta:{
+        title:'我的店铺'
+      },
+      component:Shop
+    },
+    {
+      path:'/tradeCount',
+      name:'tradeCount',
+      meta:{
+        title:'交易统计'
+      },
+      component:TradeCount
+    },
+    {
+      path:'/receivable',
+      name:'receivable',
+      meta:{
+        title:'超级卡收款'
+      },
+      component:Receivable
+    },
+    {
+      path:'/result',
+      name:'result',
+      meta:{
+        title:'支付结果'
+      },
+      component:Result
+    },
+    {
+      path:'/account',
+      name:'account',
+      meta:{
+        title:'每日对账'
+      },
+      component:Account
     }
   ]
 })

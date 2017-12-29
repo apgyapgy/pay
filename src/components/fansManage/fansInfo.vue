@@ -2,10 +2,11 @@
   <div id="fansInfo">
     <header class="weui-flex font14">
       <div class="fansPhoto">
-        <img :src="userInfo.headImgUrl">
+        <img src="https://staticds.fuiou.com/sys/ds/o2oh5/mch/static/images/user.png">
+        <!--<img :src="userInfo.headImgUrl">-->
       </div>
       <div class="weui-flex__item gray line24">
-        <div>昵称：{{userInfo.nickNm}}</div>
+        <!--<div>昵称：{{userInfo.nickNm}}</div>-->
         <div v-show="userInfo.province">省市：{{userInfo.province}} {{userInfo.city}}</div>
         <div v-show="userInfo.sex!=0">性别：{{userInfo.sex==1?"男":"女"}}</div>
         <div>是否关注公众号：{{userInfo.openIdCircle ? "是" : "否"}}</div>
@@ -16,15 +17,15 @@
     </header>
     <div class="couponList font14 txtCenter bgfff">
       <div class="weui-flex title">
-        <div class="weui-flex__item">优惠券名称</div>
-        <div class="weui-flex__item">有效日期</div>
-        <div class="weui-flex__item">使用状态</div>
+        <div class="weui-flex__item" style="width: 42%">优惠券名称</div>
+        <div class="weui-flex__item" style="width: 40%">有效日期</div>
+        <div class="weui-flex__item" style="width: 18%">使用状态</div>
       </div>
       <div v-show="isHaveData" class="weui-flex list" v-for="item in items">
-        <div class="weui-flex__item">{{item.couponNm}}</div>
+        <div class="weui-flex__item" style="width: 40%; margin:0 2%">{{item.couponNm}}</div>
         <!--<router-link :to="{ path: 'couponDetail', query: { couponNo:item.couponNo }}" class="weui-flex__item blue">{{item.couponNm}}</router-link>-->
-        <div class="weui-flex__item">{{item.couponLogo}}至{{item.couponLogoTeam}}</div>
-        <div class="weui-flex__item">{{item.couponStDesc}}</div>
+        <div class="weui-flex__item" style="width: 40%">{{item.couponLogo}}至{{item.couponLogoTeam}}</div>
+        <div class="weui-flex__item" style="width: 18%">{{item.couponStDesc}}</div>
       </div>
       <div v-show="!isHaveData" class="weui-loadmore weui-loadmore_line">
         <span class="weui-loadmore__tips">暂无数据</span>

@@ -126,10 +126,14 @@
           _this.$http.jsonp(httpUrl.sendCoupon, {params: Object.assign(params, httpUrl.com_params)}).then((response) => {
             if(response.data.code==200){
               $.alert('发送成功',function () {
-                if(_this.isFrom=='fansInfo'){
-                  _this.$router.push({ path: '/fansInfo' });
-                }else{
+//                if(_this.isFrom=='fansInfo'){
+//                  _this.$router.push({ path: '/fansInfo' });
+//                }
+                if(_this.isFrom=='fansManage'){
                   _this.$router.push({ path: '/fansManage' });
+                }
+                else{
+                  window.location.reload();
                 }
               });
             }else {

@@ -43,11 +43,12 @@
       <div class="weui-panel__bd">
         <div @click="goFansInfo($event)" :item="JSON.stringify(item)" class="weui-media-box weui-media-box_appmsg" v-for="(item,index) in items" >
           <div class="weui-media-box__hd">
-            <img class="weui-media-box__thumb imgRadius" :src="item.headImgUrl">
+            <img class="weui-media-box__thumb imgRadius" src="https://static.fuiou.com/sys/ds/o2oh5/mch/static/images/user2.png">
+            <!--<img class="weui-media-box__thumb imgRadius" :src="item.headImgUrl">-->
           </div>
           <div class="weui-media-box__bd">
             <p class="wf font14">
-              <span>{{item.nickNm}}<img v-show="item.openIdCircle" class="titleImg" src="../../../static/images/weChat-icon.png"></span>
+              <span class="blue">{{item.userTp==0?'微信用户':'支付宝用户'}}<img v-show="item.openIdCircle" class="titleImg" src="../../../static/images/weChat-icon.png"></span>
               <span class="fr">消费次数：{{item.txnTotalNum}}<br>消费金额：{{item.txnTotalAmt}}</span>
             </p>
             <p class="weui-media-box__desc wf line30">最近消费时间:{{item.txnLatestTs}}</p>
@@ -65,7 +66,7 @@
           <router-link to="/index" class="weui-btn weui-btn_default">返回首页</router-link>
         </div>
         <div class="weui-flex__item">
-          <a @click="goSendCoupon" class="weui-btn weui-btn_primary">批量发券</a>
+          <a @click="goSendCoupon" class="weui-btn weui-btn_primary" :class="isHaveData?'weui-btn_disabled':''">批量发券</a>
         </div>
       </div>
     </div>
@@ -245,15 +246,17 @@
         this.$router.push({ path: '/fansInfo' });
       },
       goSendCoupon:function () {
+        if(this.isHaveData){
+          return
+        }
         this.$store.commit("NEWFANSITEM", this.unionId);
         this.$router.push({ path: '/fansCoupon',query:{ isfrom:'fansManage'}});
       }
     },
     beforeRouteLeave (to, from, next) {
-      $.each(this.selectItem,function(i,obj) {
-        $('#'+obj.name).picker("close");
-      });
+      $.closePicker();
       $.closeModal();
+      document.activeElement.blur();
       next();
     },
     mounted(){//等整个视图渲染完毕，用 vm.$nextTick 替换掉 mounted
@@ -271,27 +274,27 @@
               switch(val){
                 case '由高到低':
                   _this.orderBy = 'txn_total_amt desc';//交易金额降序
-                  _this.userTp = '';
+                  _this.userTp = _this.userTp;
                   break;
                 case '由低到高':
                   _this.orderBy = 'txn_total_amt';//交易金额升序
-                  _this.userTp = '';
+                  _this.userTp = _this.userTp;
                   break;
                 case '由多到少':
                   _this.orderBy = 'txn_total_num desc';//交易次数降序
-                  _this.userTp = '';
+                  _this.userTp = _this.userTp;
                   break;
                 case '由少到多':
                   _this.orderBy = 'txn_total_num';//交易次数升序
-                  _this.userTp = '';
+                  _this.userTp = _this.userTp;
                   break;
                 case '由近及远':
                   _this.orderBy = 'txn_latest_ts desc';//最近交易时间降序
-                  _this.userTp = '';
+                  _this.userTp = _this.userTp;
                   break;
                 case '由远及近':
                   _this.orderBy = 'txn_latest_ts';//最近交易时间升序
-                  _this.userTp = '';
+                  _this.userTp = _this.userTp;
                   break;
                 case '全部':
                   _this.orderBy ='';
@@ -311,18 +314,14 @@
             }
           });
         });
-    	});
-    	window.addEventListener('popstate', function(event) {
-				event.preventDefault();
-				console.log("aaa");
-			});
+      })
       //记录mchid
       let mchId = _this.$route.query.mchId;
       if(mchId){
         _this.mchId = mchId;
       }else{
         let localData = localStorage.getItem("mchId");
-        this.$store.commit("MCHID", localData);
+        _this.$store.commit("MCHID", localData);
         _this.mchId = localData;
       }
       _this.allData();

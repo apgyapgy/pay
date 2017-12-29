@@ -1,5 +1,5 @@
-/** 
-* jQuery WeUI V1.0.1 
+/**
+* jQuery WeUI V1.0.1
 * By 言川
 * http://lihongxun945.github.io/jquery-weui/
  */
@@ -138,7 +138,7 @@
     else if (window.mozCancelAnimationFrame) return window.mozCancelAnimationFrame(id);
     else {
       return window.clearTimeout(id);
-    }  
+    }
   };
 
   $.fn.join = function(arg) {
@@ -147,8 +147,8 @@
 })($);
 
 /*===========================
-  Template7 Template engine
-  ===========================*/
+ Template7 Template engine
+ ===========================*/
 /* global $:true */
 /* jshint unused:false */
 /* jshint forin:false */
@@ -379,7 +379,7 @@
                 variable = part.replace('this', ctx);
               }
               else {
-                variable += '.' + part;       
+                variable += '.' + part;
               }
             }
           }
@@ -536,7 +536,7 @@
             return options.fn(this, options.data);
           }
           else {
-            return options.inverse(this, options.data);   
+            return options.inverse(this, options.data);
           }
         }
       }
@@ -554,7 +554,7 @@
       Template7.prototype.helpers[name] = fn;
     };
     t7.unregisterHelper = function (name) {
-      Template7.prototype.helpers[name] = undefined;  
+      Template7.prototype.helpers[name] = undefined;
       delete Template7.prototype.helpers[name];
     };
 
@@ -568,6 +568,7 @@
     return t7;
   })();
 }($);
+
 
 /*! Hammer.JS - v2.0.8 - 2016-04-23
  * http://hammerjs.github.io/
@@ -3217,7 +3218,7 @@ if (typeof define === 'function' && define.amd) {
   "use strict";
 
   var defaults;
-  
+
   $.modal = function(params, onOpen) {
     params = $.extend({}, defaults, params);
 
@@ -3233,7 +3234,7 @@ if (typeof define === 'function' && define.amd) {
                 ( params.text ? '<div class="weui-dialog__bd">'+params.text+'</div>' : '')+
                 '<div class="weui-dialog__ft">' + buttonsHtml + '</div>' +
               '</div>';
-    
+
     var dialog = $.openModal(tpl, onOpen);
 
     dialog.find(".weui-dialog__btn").each(function(i, e) {
@@ -3256,12 +3257,12 @@ if (typeof define === 'function' && define.amd) {
     mask.show();
 
     var dialog = $(tpl).appendTo(document.body);
- 
+
     if (onOpen) {
       dialog.transitionEnd(function () {
         onOpen.call(dialog);
       });
-    }   
+    }
 
     dialog.show();
     mask.addClass("weui-mask--visible");
@@ -3477,7 +3478,7 @@ if (typeof define === 'function' && define.amd) {
   "use strict";
 
   var defaults;
-  
+
   var show = function(html, className) {
     className = className || "";
     var mask = $("<div class='weui-mask_transparent'></div>").appendTo(document.body);
@@ -3544,7 +3545,7 @@ if (typeof define === 'function' && define.amd) {
   "use strict";
 
   var defaults;
-  
+
   var show = function(params) {
 
     var mask = $("<div class='weui-mask weui-actions_mask'></div>").appendTo(document.body);
@@ -3556,7 +3557,7 @@ if (typeof define === 'function' && define.amd) {
     }).join("");
 
     var titleHtml = "";
-    
+
     if (params.title) {
       titleHtml = '<div class="weui-actionsheet__title">' + params.title + '</div>';
     }
@@ -3808,7 +3809,7 @@ if (typeof define === 'function' && define.amd) {
 
   $(document).on("click touchstart", ".weui-search-bar__label", function(e) {
     $(e.target).parents(".weui-search-bar").addClass("weui-search-bar_focusing").find('input').focus();
-  }) 
+  })
   /*
   .on("blur", ".weui-search-bar__input", function(e) {
     var $input = $(e.target);
@@ -3839,7 +3840,7 @@ Device/OS Detection
     var iphone = !ipad && ua.match(/(iPhone\sOS)\s([\d_]+)/);
 
     device.ios = device.android = device.iphone = device.ipad = device.androidChrome = false;
-    
+
     // Android
     if (android) {
         device.os = 'android';
@@ -3873,7 +3874,7 @@ Device/OS Detection
 
     // Webview
     device.webView = (iphone || ipad || ipod) && ua.match(/.*AppleWebKit(?!.*Safari)/i);
-        
+
     // Minimal UI
     if (device.os && device.os === 'ios') {
         var osVersionArr = device.osVersion.split('.');
@@ -3913,7 +3914,7 @@ Device/OS Detection
                 classNames.push('ios-gt-' + i);
             }
         }
-        
+
     }
     // Status bar classes
     if (device.statusBar) {
@@ -3967,7 +3968,7 @@ Device/OS Detection
       p.params = params;
       p.cols = [];
       p.initialized = false;
-      
+
       // Inline flag
       p.inline = p.params.container ? true : false;
 
@@ -3988,8 +3989,8 @@ Device/OS Detection
                       if ($(window).width() >= 768) toPopover = true;
                   }
               }
-          } 
-          return toPopover; 
+          }
+          return toPopover;
       }
       function inPopover() {
           if (p.opened && p.container && p.container.length > 0 && p.container.parents('.popover').length > 0) return true;
@@ -4038,7 +4039,7 @@ Device/OS Detection
           col.container = colContainer;
           col.wrapper = col.container.find('.picker-items-col-wrapper');
           col.items = col.wrapper.find('.picker-item');
-          
+
           var i, j;
           var wrapperHeight, itemHeight, itemsHeight, minTranslate, maxTranslate;
           col.replaceValues = function (values, displayValues) {
@@ -4065,7 +4066,7 @@ Device/OS Detection
               itemHeight = col.items[0].offsetHeight;
               itemsHeight = itemHeight * col.items.length;
               minTranslate = colHeight / 2 - itemsHeight + itemHeight / 2;
-              maxTranslate = colHeight / 2 - itemHeight / 2;    
+              maxTranslate = colHeight / 2 - itemHeight / 2;
               if (col.width) {
                   colWidth = col.width;
                   if (parseInt(colWidth, 10) === colWidth) colWidth = colWidth + 'px';
@@ -4085,7 +4086,7 @@ Device/OS Detection
               }
           };
           col.calcSize();
-          
+
           col.wrapper.transform('translate3d(0,' + maxTranslate + 'px,0)').transition(0);
 
 
@@ -4104,7 +4105,7 @@ Device/OS Detection
               // Update wrapper
               col.wrapper.transition(transition);
               col.wrapper.transform('translate3d(0,' + (newTranslate) + 'px,0)');
-                  
+
               // Watch items
               if (p.params.updateValuesOnMomentum && col.activeIndex && col.activeIndex !== newActiveIndex ) {
                   $.cancelAnimationFrame(animationFrameId);
@@ -4154,13 +4155,13 @@ Device/OS Detection
                       p.updateValue();
                   }
               }
-                  
+
               // Set 3D rotate effect
               if (!p.params.rotateEffect) {
                   return;
               }
               var percentage = (translate - (Math.floor((translate - maxTranslate)/itemHeight) * itemHeight + maxTranslate)) / itemHeight;
-              
+
               col.items.each(function () {
                   var item = $(this);
                   var itemOffsetTop = item.index() * itemHeight;
@@ -4169,7 +4170,7 @@ Device/OS Detection
                   var percentage = itemOffset / itemHeight;
 
                   var itemsFit = Math.ceil(col.height / itemHeight / 2) + 1;
-                  
+
                   var angle = (-18*percentage);
                   if (angle > 180) angle = 180;
                   if (angle < -180) angle = -180;
@@ -4200,7 +4201,7 @@ Device/OS Detection
               var position = $.getTouchPosition(e);
               touchStartY = touchCurrentY = position.y;
               touchStartTime = (new Date()).getTime();
-              
+
               allowItemClick = true;
               startTranslate = currentTranslate = $.getTranslate(col.wrapper[0], 'y');
           }
@@ -4237,7 +4238,7 @@ Device/OS Detection
 
               // Update items
               col.updateItems(undefined, currentTranslate, 0, p.params.updateValuesOnTouchmove);
-              
+
               // Calc velocity
               velocityTranslate = currentTranslate - prevTranslate || currentTranslate;
               velocityTime = (new Date()).getTime();
@@ -4371,8 +4372,8 @@ Device/OS Detection
                       '<div class="picker-center-highlight"></div>' +
                   '</div>' +
               '</div>';
-              
-          p.pickerHTML = pickerHTML;    
+
+          p.pickerHTML = pickerHTML;
       };
 
       // Input Events
@@ -4409,7 +4410,7 @@ Device/OS Detection
               if (e.target !== p.input[0] && $(e.target).parents('.weui-picker-modal').length === 0) p.close();
           }
           else {
-              if ($(e.target).parents('.weui-picker-modal').length === 0) p.close();   
+              if ($(e.target).parents('.weui-picker-modal').length === 0) p.close();
           }
       }
 
@@ -4418,7 +4419,7 @@ Device/OS Detection
           if (p.input.length > 0) {
               if (p.params.inputReadOnly) p.input.prop('readOnly', true);
               if (!p.inline) {
-                  p.input.on('click', openOnInput);    
+                  p.input.on('click', openOnInput);
               }
               if (p.params.inputReadOnly) {
                   p.input.on('focus mousedown', function (e) {
@@ -4426,9 +4427,9 @@ Device/OS Detection
                   });
               }
           }
-              
+
       }
-      
+
       if (!p.inline) $('html').on('click', closeOnHTMLClick);
 
       // Open
@@ -4483,7 +4484,7 @@ Device/OS Detection
                   if ((!p.initialized && p.params.value) || (p.initialized && p.value)) updateItems = false;
                   p.initPickerCol(this, updateItems);
               });
-              
+
               // Set value
               if (!p.initialized) {
                   if (p.params.value) {
@@ -4562,7 +4563,7 @@ Device/OS Detection
 
     //关于布局的问题，如果直接放在body上，则做动画的时候会撑开body高度而导致滚动条变化。
     var dialog = $(tpl).appendTo(container);
-    
+
     dialog.width(); //通过取一次CSS值，强制浏览器不能把上下两行代码合并执行，因为合并之后会导致无法出现动画。
 
     dialog.addClass("weui-picker-modal-visible");
@@ -4598,7 +4599,7 @@ Device/OS Detection
     return this.each(function() {
       if(!this) return;
       var $this = $(this);
-      
+
       var picker = $this.data("picker");
       if(!picker) {
         params = params || {};
@@ -4758,7 +4759,7 @@ Device/OS Detection
       this._bind($.updatePicker(this.getHTML()));
     }
   }
-  
+
   Select.prototype.open = function(values, titles) {
 
     if(this._open) return;
@@ -4777,7 +4778,7 @@ Device/OS Detection
     var config = this.config;
 
     var dialog = this.dialog = $.openPicker(this.getHTML());
-    
+
     this._bind(dialog);
 
     this._open = true;
@@ -4947,8 +4948,8 @@ Device/OS Detection
                       if ($(window).width() >= 768) toPopover = true;
                   }
               }
-          } 
-          return toPopover; 
+          }
+          return toPopover;
       }
       function inPopover() {
           if (p.opened && p.container && p.container.length > 0 && p.container.parents('.popover').length > 0) return true;
@@ -5025,7 +5026,7 @@ Device/OS Detection
                       inputValue.push(formatDate(p.value[i]));
                   }
                   inputValue = inputValue.join(', ');
-              } 
+              }
               $(p.input).val(inputValue);
               $(p.input).trigger('change');
           }
@@ -5064,7 +5065,7 @@ Device/OS Detection
               e.preventDefault();
               if (p.animating) {
                   isTouched = false;
-                  return;   
+                  return;
               }
               allowItemClick = false;
               if (!isMoved) {
@@ -5090,7 +5091,7 @@ Device/OS Detection
                   return;
               }
               isTouched = isMoved = false;
-              
+
               touchEndTime = new Date().getTime();
               if (touchEndTime - touchStartTime < 300) {
                   if (Math.abs(touchesDiff) < 10) {
@@ -5102,7 +5103,7 @@ Device/OS Detection
                   }
                   else {
                       if (rtl) p.prevMonth();
-                      else p.nextMonth();   
+                      else p.nextMonth();
                   }
               }
               else {
@@ -5156,7 +5157,7 @@ Device/OS Detection
               p.wrapper.on($.touchEvents.move, handleTouchMove);
               p.wrapper.on($.touchEvents.end, handleTouchEnd);
           }
-              
+
           p.container[0].f7DestroyCalendarEvents = function () {
               p.container.find('.picker-calendar-prev-month').off('click', p.prevMonth);
               p.container.find('.picker-calendar-next-month').off('click', p.nextMonth);
@@ -5169,7 +5170,7 @@ Device/OS Detection
                   p.wrapper.off($.touchEvents.end, handleTouchEnd);
               }
           };
-          
+
 
       };
       p.destroyCalendarEvents = function (colContainer) {
@@ -5202,11 +5203,11 @@ Device/OS Detection
               daysInMonth = p.daysInMonth(date),
               firstDayOfMonthIndex = new Date(date.getFullYear(), date.getMonth()).getDay();
           if (firstDayOfMonthIndex === 0) firstDayOfMonthIndex = 7;
-          
+
           var dayDate, currentValues = [], i, j,
               rows = 6, cols = 7,
               monthHTML = '',
-              dayIndex = 0 + (p.params.firstDay - 1),    
+              dayIndex = 0 + (p.params.firstDay - 1),
               today = new Date().setHours(0,0,0,0),
               minDate = p.params.minDate ? new Date(p.params.minDate).getTime() : null,
               maxDate = p.params.maxDate ? new Date(p.params.maxDate).getTime() : null;
@@ -5216,7 +5217,7 @@ Device/OS Detection
                   currentValues.push(new Date(p.value[i]).setHours(0,0,0,0));
               }
           }
-              
+
           for (i = 1; i <= rows; i++) {
               var rowHTML = '';
               var row = i;
@@ -5238,7 +5239,7 @@ Device/OS Detection
                           dayDate = new Date(month + 1 > 11 ? year + 1 : year, month + 1 > 11 ? 0 : month + 1, dayNumber).getTime();
                       }
                       else {
-                          dayDate = new Date(year, month, dayNumber).getTime();    
+                          dayDate = new Date(year, month, dayNumber).getTime();
                       }
                   }
                   // Today
@@ -5251,7 +5252,7 @@ Device/OS Detection
                   }
                   // Disabled
                   if ((minDate && dayDate < minDate) || (maxDate && dayDate > maxDate)) {
-                      addClass += ' picker-calendar-day-disabled';   
+                      addClass += ' picker-calendar-day-disabled';
                   }
 
                   dayDate = new Date(dayDate);
@@ -5268,7 +5269,7 @@ Device/OS Detection
       p.updateCurrentMonthYear = function (dir) {
           if (typeof dir === 'undefined') {
               p.currentMonth = parseInt(p.months.eq(1).attr('data-month'), 10);
-              p.currentYear = parseInt(p.months.eq(1).attr('data-year'), 10);   
+              p.currentYear = parseInt(p.months.eq(1).attr('data-year'), 10);
           }
           else {
               p.currentMonth = parseInt(p.months.eq(dir === 'next' ? (p.months.length - 1) : 0).attr('data-month'), 10);
@@ -5276,7 +5277,7 @@ Device/OS Detection
           }
           p.container.find('.current-month-value').text(p.params.monthNames[p.currentMonth]);
           p.container.find('.current-year-value').text(p.currentYear);
-              
+
       };
       p.onMonthChangeStart = function (dir) {
           p.updateCurrentMonthYear(dir);
@@ -5294,7 +5295,7 @@ Device/OS Detection
           p.animating = false;
           var nextMonthHTML, prevMonthHTML, newMonthHTML;
           p.wrapper.find('.picker-calendar-month:not(.picker-calendar-month-prev):not(.picker-calendar-month-current):not(.picker-calendar-month-next)').remove();
-          
+
           if (typeof dir === 'undefined') {
               dir = 'next';
               rebuildBoth = true;
@@ -5470,7 +5471,7 @@ Device/OS Detection
           if (transitionEndCallback) {
              p.wrapper.transitionEnd(function () {
                   p.onMonthChangeEnd(dir, true);
-              }); 
+              });
           }
           if (!p.params.animate) {
               p.onMonthChangeEnd(dir);
@@ -5482,14 +5483,14 @@ Device/OS Detection
       p.prevYear = function () {
           p.setYearMonth(p.currentYear - 1);
       };
-      
+
 
       // HTML Layout
       p.layout = function () {
           var pickerHTML = '';
           var pickerClass = '';
           var i;
-          
+
           var layoutDate = p.value && p.value.length ? p.value[0] : new Date().setHours(0,0,0,0);
           var prevMonthHTML = p.monthHTML(layoutDate, 'prev');
           var currentMonthHTML = p.monthHTML(layoutDate);
@@ -5502,7 +5503,7 @@ Device/OS Detection
                   var weekDayIndex = (i + p.params.firstDay > 6) ? (i - 7 + p.params.firstDay) : (i + p.params.firstDay);
                   var dayName = p.params.dayNamesShort[weekDayIndex];
                   weekHeaderHTML += '<div class="picker-calendar-week-day ' + ((p.params.weekendDays.indexOf(weekDayIndex) >= 0) ? 'picker-calendar-week-day-weekend' : '') + '"> ' + dayName + '</div>';
-                  
+
               }
               weekHeaderHTML = '<div class="picker-calendar-week-days">' + weekHeaderHTML + '</div>';
           }
@@ -5524,9 +5525,9 @@ Device/OS Detection
                       monthsHTML +
                   '</div>' +
               '</div>';
-              
-              
-          p.pickerHTML = pickerHTML;    
+
+
+          p.pickerHTML = pickerHTML;
       };
 
       // Input Events
@@ -5564,7 +5565,7 @@ Device/OS Detection
               if (e.target !== p.input[0] && $(e.target).parents('.weui-picker-modal').length === 0) p.close();
           }
           else {
-              if ($(e.target).parents('.weui-picker-modal').length === 0) p.close();   
+              if ($(e.target).parents('.weui-picker-modal').length === 0) p.close();
           }
       }
 
@@ -5573,7 +5574,7 @@ Device/OS Detection
           if (p.input.length > 0) {
               if (p.params.inputReadOnly) p.input.prop('readOnly', true);
               if (!p.inline) {
-                  p.input.on('click', openOnInput);    
+                  p.input.on('click', openOnInput);
               }
               if (p.params.inputReadOnly) {
                   p.input.on('focus mousedown', function (e) {
@@ -5581,9 +5582,9 @@ Device/OS Detection
                   });
               }
           }
-              
+
       }
-      
+
       //iphone 上无法正确触发 click，会导致点击外面无法关闭
       if (!p.inline) $(document).on('click touchend', closeOnHTMLClick);
 
@@ -5654,7 +5655,7 @@ Device/OS Detection
 
               // Update input value
               if (updateValue) p.updateValue();
-              
+
           }
 
           // Set flag
@@ -5754,14 +5755,14 @@ Device/OS Detection
     animate: true,
     closeOnSelect: true,
     monthPicker: true,
-    monthPickerTemplate: 
+    monthPickerTemplate:
         '<div class="picker-calendar-month-picker">' +
             '<a href="javascript:;" class="link icon-only picker-calendar-prev-month"><i class="icon icon-prev"></i></a>' +
             '<div class="current-month-value"></div>' +
             '<a href="javascript:;" class="link icon-only picker-calendar-next-month"><i class="icon icon-next"></i></a>' +
         '</div>',
     yearPicker: true,
-    yearPickerTemplate: 
+    yearPickerTemplate:
         '<div class="picker-calendar-year-picker">' +
             '<a href="javascript:;" class="link icon-only picker-calendar-prev-year"><i class="icon icon-prev"></i></a>' +
             '<span class="current-year-value"></span>' +
@@ -5775,7 +5776,7 @@ Device/OS Detection
     onlyInPopover: false,
     toolbar: true,
     toolbarCloseText: 'Done',
-    toolbarTemplate: 
+    toolbarTemplate:
         '<div class="toolbar">' +
             '<div class="toolbar-inner">' +
                 '{{yearPicker}}' +
@@ -5867,7 +5868,7 @@ Device/OS Detection
             if(current < +min) {
               picker.setValue(lastValidValues);
               valid = false;
-            } 
+            }
           }
           if(params.max) {
             var max = new Date(typeof params.max === "function" ? params.max() : params.max);
@@ -5914,7 +5915,7 @@ Device/OS Detection
               return dates;
             })()
           },
-          
+
         ]
       }
 
